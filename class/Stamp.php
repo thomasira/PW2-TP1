@@ -13,14 +13,7 @@ class Stamp {
         $this->year = $stamp["year"];
     }
 
-/*     public function getProp() {
-        return [
-            "name" => $this->name,
-            "description" => $this->description,
-            "year" => $this->year
-        ];
-    } */
-
+    
     public function formatHTML() {
 
     }
