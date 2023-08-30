@@ -4,17 +4,16 @@ body{
 body>main{
     padding: var(--padLrg);
     max-width: 1400px;
-    margin: auto;
 }
 body>main>header{
     display: flex;
     flex-flow: row;
-    justify-content: space-between;
+    justify-content: center;
     gap: var(--padLrg);
 }
 body>main>*+*{
     margin-top: var(--padMed);
 }
-p {
+p{
     font-size: var(--fontSml);
 }

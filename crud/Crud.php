@@ -2,19 +2,16 @@
 
 class Crud extends PDO {
     public $dbname;
+
+
     public function __construct($dbname) {
         parent::__construct("mysql:host=localhost;dbname=$dbname;port=3306;charset=utf8", "root", "");
         $this->dbname = $dbname;
     }
 
-/*     public function read($table, $field = "id", $order = "ASC") {
-        $sql = "SELECT * FROM $table ORDER BY $field $order";
-        $query = $this->query($sql);
-        return $query->fetchAll();
-    } */
-
-    public function read($tableOg, $target = "*", $tablesMg = null, $field = "id", $order = "ASC") {
-        if ($target != "*") $target = implode(", ", $target);
+    public function readStamps($tableOg, $targets = "*", $tablesMg = null, $field = "id", $order = "ASC") {
+        if ($targets != "*") $targets = implode(", ", $targets);
+        $sql = "SELECT $targets FROM $tableOg";
         if ($tablesMg) {
             $sqlMerge = "";
             foreach ($tablesMg as $tableMg) {
@@ -22,10 +19,26 @@ class Crud extends PDO {
                 $id = $tableMg . ".id";
                 $sqlMerge .= " INNER JOIN $this->dbname.$tableMg ON $id = $idOg";
             }
-            $sql = "SELECT $target FROM $tableOg" . "$sqlMerge;";
-        } else {
-            $sql = "SELECT $target FROM $tableOg";
-        }
+            $sql .= "$sqlMerge";
+        } 
+        $sql .= ";";
+        $query = $this->query($sql);
+        return $query->fetchAll();
+    }
+
+    public function readCatStamps($tableOg, $targets = "*", $tablesMg = null, $field = "id", $order = "ASC") {
+        if ($targets != "*") $targets = implode(", ", $targets);
+        $sql = "SELECT $targets FROM $tableOg";
+        if ($tablesMg) {
+            $sqlMerge = "";
+            foreach ($tablesMg as $tableMg) {
+                $idOg = $tableMg . "_id";
+                $id = $tableMg . ".id";
+                $sqlMerge .= " INNER JOIN $this->dbname.$tableMg ON $id = $idOg";
+            }
+            $sql .= "$sqlMerge";
+        } 
+        $sql .= ";";
         $query = $this->query($sql);
         return $query->fetchAll();
     }
