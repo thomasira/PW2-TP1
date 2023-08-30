@@ -5,76 +5,90 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema Stamp
+-- Schema stamp
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema Stamp
+-- Schema stamp
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `Stamp` DEFAULT CHARACTER SET utf8 ;
-USE `Stamp` ;
+CREATE SCHEMA IF NOT EXISTS `stamp` DEFAULT CHARACTER SET utf8 ;
+USE `stamp` ;
 
 -- -----------------------------------------------------
--- Table `Stamp`.`stamp`
+-- Table `stamp`.`category`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Stamp`.`stamp` (
+CREATE TABLE IF NOT EXISTS `stamp`.`category` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `description` TEXT NULL,
-  `price` FLOAT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Stamp`.`client`
+-- Table `stamp`.`condition`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Stamp`.`client` (
+CREATE TABLE IF NOT EXISTS `stamp`.`condition` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(45) NULL,
-  `address` VARCHAR(45) NULL,
-  `phone` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Stamp`.`invoice`
+-- Table `stamp`.`stamp`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Stamp`.`invoice` (
-  `id` INT NOT NULL,
-  `client_id` INT NOT NULL,
-  `date` DATE NULL,
+CREATE TABLE IF NOT EXISTS `stamp`.`stamp` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `year` INT NULL,
+  `origin` VARCHAR(45) NULL,
+  `category_id` INT NOT NULL,
+  `condition_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_invoice_client_idx` (`client_id` ASC),
-  CONSTRAINT `fk_invoice_client`
-    FOREIGN KEY (`client_id`)
-    REFERENCES `Stamp`.`client` (`id`)
+  INDEX `fk_stamp_category_idx` (`category_id` ASC) VISIBLE,
+  INDEX `fk_stamp_condition1_idx` (`condition_id` ASC) VISIBLE,
+  CONSTRAINT `fk_stamp_category`
+    FOREIGN KEY (`category_id`)
+    REFERENCES `stamp`.`category` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_stamp_condition1`
+    FOREIGN KEY (`condition_id`)
+    REFERENCES `stamp`.`condition` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Stamp`.`invoice_has_stamp`
+-- Table `stamp`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Stamp`.`invoice_has_stamp` (
-  `invoice_id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `stamp`.`user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stamp`.`user_stamp`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stamp`.`user_stamp` (
   `stamp_id` INT NOT NULL,
-  `qty` INT NOT NULL,
-  `price` FLOAT NOT NULL,
-  PRIMARY KEY (`invoice_id`, `stamp_id`),
-  INDEX `fk_invoice_has_stamp_stamp1_idx` (`stamp_id` ASC),
-  INDEX `fk_invoice_has_stamp_invoice1_idx` (`invoice_id` ASC),
-  CONSTRAINT `fk_invoice_has_stamp_invoice1`
-    FOREIGN KEY (`invoice_id`)
-    REFERENCES `Stamp`.`invoice` (`id`)
+  `user_id` INT NOT NULL,
+  `qty` INT NOT NULL DEFAULT 1,
+  PRIMARY KEY (`stamp_id`, `user_id`),
+  INDEX `fk_stamp_has_user_user1_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_stamp_has_user_stamp1_idx` (`stamp_id` ASC) VISIBLE,
+  CONSTRAINT `fk_stamp_has_user_stamp1`
+    FOREIGN KEY (`stamp_id`)
+    REFERENCES `stamp`.`stamp` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_invoice_has_stamp_stamp1`
-    FOREIGN KEY (`stamp_id`)
-    REFERENCES `Stamp`.`stamp` (`id`)
+  CONSTRAINT `fk_stamp_has_user_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `stamp`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

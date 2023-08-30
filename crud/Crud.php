@@ -1,17 +1,36 @@
 <?php
 
 class Crud extends PDO {
-    public function __construct() {
-        parent::__construct("mysql:host=localhost;dbname=stamp;port=3306;charset=utf8", "root", "");
+    public $dbname;
+    public function __construct($dbname) {
+        parent::__construct("mysql:host=localhost;dbname=$dbname;port=3306;charset=utf8", "root", "");
+        $this->dbname = $dbname;
     }
 
-    public function read($table, $field = "id", $order = "ASC") {
+/*     public function read($table, $field = "id", $order = "ASC") {
         $sql = "SELECT * FROM $table ORDER BY $field $order";
+        $query = $this->query($sql);
+        return $query->fetchAll();
+    } */
+
+    public function read($tableOg, $target = "*", $tablesMg = null, $field = "id", $order = "ASC") {
+        if ($target != "*") $target = implode(", ", $target);
+        if ($tablesMg) {
+            $sqlMerge = "";
+            foreach ($tablesMg as $tableMg) {
+                $idOg = $tableMg . "_id";
+                $id = $tableMg . ".id";
+                $sqlMerge .= " INNER JOIN $this->dbname.$tableMg ON $id = $idOg";
+            }
+            $sql = "SELECT $target FROM $tableOg" . "$sqlMerge;";
+        } else {
+            $sql = "SELECT $target FROM $tableOg";
+        }
         $query = $this->query($sql);
         return $query->fetchAll();
     }
 
-    public function readId($table, $value, $field = "id", $url = "client-index.php") {
+    /* public function readId($table, $value, $field = "id", $url = "client-index.php") {
         $sql = "SELECT * FROM $table WHERE $field = :$field";
         $query = $this->prepare($sql);
         $query->bindValue(":$field", $value);
@@ -32,7 +51,7 @@ class Crud extends PDO {
 
     public function delete($table, $field = "id") {
         
-    }
+    } */
 }
 
 ?>

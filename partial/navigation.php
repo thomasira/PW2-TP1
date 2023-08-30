@@ -1,5 +1,5 @@
 
 <nav>
-    <a href="./sell">SELL</a>
-    <a href="#">PANEL</a>
+    <a href="">HOME</a>
+    <a href="./sell">PANEL</a>
 </nav>

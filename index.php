@@ -1,17 +1,13 @@
 <?php
-require_once "./config.php";
-require_once(PROJECT_ROOT . "/lib/Router.php");
-require_once PROJECT_ROOT . "/crud/Crud.php";
+include "./partial/school-header.php";
+include "./partial/navigation.php";
+require "./lib/View.php";
 
-$router = new Router();
+require "./class/Stamp.php";
+require "./crud/crud.php";
 
-$crud = new Crud();
-$stamps = $crud->read("stamp");
-foreach ($stamps as $stamp) {
-    $router->addRoute(SERVER_ROOT, ["controller" => "Page", "action" => "home"]);
-}
+$crud = new Crud("stamp");
+$stamps = $crud->read("stamp", ["stamp.id as stamp_id, stamp.name as stamp_name, condition.id as condition_id, stamp.name, condition.name"], ["condition", "category"]);
 
-$router->addRoute(SERVER_ROOT, ["controller" => "Page", "action" => "home"]);
-$router->addRoute("/panel", ["controller" => "Panel", "action" => "index"]);
-$router->addRoute("/panel/create", ["controller" => "Panel", "action" => "create"]);
-$router->dispatch();
+
+include "./partial/school-footer.php";
