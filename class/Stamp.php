@@ -15,6 +15,6 @@ class Stamp {
 
     
     public function formatHTML() {
-
+        
     }
 }
