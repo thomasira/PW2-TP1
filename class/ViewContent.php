@@ -82,16 +82,38 @@ class ViewContent {
         <?php
     }
 
-    static public function stampForm() {
+    static public function stampForm($categories, $aspects) {
+        print_r($data);
         ?>
         <main>
            <form action="" method="post">
                 <label>Name:
                     <input type="text" name="name" required>
                 </label>
-                <label>Email:
-                    <input type="text" name="email" required>
+                <label>Origin:
+                    <input type="text" name="origin">
                 </label>
+                <label>Year:
+                    <input type="text" name="year">
+                </label>
+                <label>Category
+                    <select name="category">
+                        <?php foreach ($categories as $category) : ?>
+                        <option value="<?= $category["id"] ?>"><?= $category["name"] ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </label>
+                <label>Aspect
+                    <select name="aspect">
+                        <?php foreach ($aspects as $aspects) : ?>
+                        <option value="<?= $aspect["id"] ?>"><?= $aspect["name"] ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </label>
+                <label>description:
+                    <textarea name="description" cols="30" rows="10"></textarea>
+                </label>
+
                 <input type="submit" value="create">
            </form>
         </main>

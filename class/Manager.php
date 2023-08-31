@@ -55,6 +55,12 @@ class Manager {
         return $objUsers;
     }
 
+    public function getAllCategories() {
+        $crud = new Crud("stamp");
+        return $crud->readStd("category");
+    }
+
+
     public function createUser($data) {
         $crud = new Crud("stamp");
         $users = $crud->create("user", $data);
