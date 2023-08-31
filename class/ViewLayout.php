@@ -1,8 +1,9 @@
 <?php
 
 class ViewLayout {
+    
     static public function schoolHeader($title) { 
-?>
+        ?>
         <!DOCTYPE html>
             <html lang="fr">
             <head>
@@ -18,22 +19,22 @@ class ViewLayout {
                 <h1>TP1</h1>
                 <p>PW2 - OOP DB CRUD</p>
             </header>
-<?php 
+        <?php 
     } 
 
 
     static public function navigation() {
-?>
-            <nav>
-                <a href=".">HOME</a>
-                <a href="./panel.php">PANEL</a>
-            </nav>
-<?php
+        ?>
+        <nav>
+            <a href=".">HOME</a>
+            <a href="./panel.php">PANEL</a>
+        </nav>
+        <?php
     }
 
     
     static public function footer() { 
-?>
+        ?>
             <footer>
                 <h4>29-08-2023</h4>
                 <div>
@@ -43,7 +44,7 @@ class ViewLayout {
             </footer>
         </body>
         </html>
-<?php 
+        <?php 
     }
 }
 ?>

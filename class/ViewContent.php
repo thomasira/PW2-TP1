@@ -19,20 +19,11 @@ class ViewContent {
         <?php
     }
 
-    static public function panel() {
+    static public function stampShow($objStamp) {
         ?>
 
         <main>
-            <header>
-                <h2>Panel</h2>
-            </header>
-            <section>
-                <div>
-                    
-                </div>
-        
-
-            </section>
+           <?php $objStamp->injectLong(); ?>
         </main>
 
         <?php
