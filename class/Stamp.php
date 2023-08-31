@@ -1,14 +1,14 @@
 <?php
 
 class Stamp {
-    private 
+/*     private 
     $id,
     $name,
     $description,
     $origin,
     $year,
     $category,
-    $aspect;
+    $aspect; */
 
     public function __construct($stamp) {
         $this->id =$stamp["id"];

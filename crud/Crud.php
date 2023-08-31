@@ -60,6 +60,15 @@ class Crud extends PDO {
         return $query->fetchAll();
     }
 
+    public function create($table, $data) {
+        $fieldName = implode(", ", array_keys($data));
+        $fieldSafe = ":" . implode(", :", array_keys($data));
+        $sql = "INSERT INTO $table ($fieldName) VALUES ($fieldSafe)";
+        $query = $this->prepare($sql);
+        foreach ($data as $key => $value) $query->bindValue(":$key", $value);
+        $query->execute();
+        return $this->lastInsertId();
+    }
 
     /* public function readId($table, $value, $field = "id", $url = "client-index.php") {
         $sql = "SELECT * FROM $table WHERE $field = :$field";

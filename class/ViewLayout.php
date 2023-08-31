@@ -27,6 +27,8 @@ class ViewLayout {
         ?>
         <nav>
             <a href=".">HOME</a>
+            <a href="./stamps.php">STAMPS</a>
+            <a href="./users.php">USERS</a>
             <a href="./panel.php">PANEL</a>
         </nav>
         <?php
