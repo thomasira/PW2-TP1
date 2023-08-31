@@ -8,7 +8,7 @@ ViewLayout::navigation();
 
 $manager = new Manager();
 $objStamps = $manager->getObjStamps();
-echo rtrim(__FILE__, ".php");
-ViewContent::home($objStamps);
+
+ViewContent::stampIndex($objStamps);
 ViewLayout::footer(); 
 ?>

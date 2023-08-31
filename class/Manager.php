@@ -96,6 +96,14 @@ class Manager {
         return $crud->readStd("user_stamp");
     }
 
+    public function getAll() {
+        $data["stamps"] = $manager->getStampNames();
+        $data["users"] = $manager->getUserNames();
+        $data["categories"] = $manager->getCategories();
+        $data["aspects"] = $manager->getAspects();
+        return $data;
+    }
+
     public function createUser($data) {
         $crud = new Crud("stamp");
         $crud->create("user", $data);

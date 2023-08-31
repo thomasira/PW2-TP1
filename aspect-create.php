@@ -9,7 +9,7 @@ if (isset($_POST) && $_POST != null) {
     $manager->createAspect($_POST);
     header("location: ./panel.php?msg=3");
 }
-ViewLayout::schoolheader("home");
+ViewLayout::schoolheader("aspect-create");
 ViewLayout::navigation();
 ViewContent::AspectForm();
 ViewLayout::footer(); 

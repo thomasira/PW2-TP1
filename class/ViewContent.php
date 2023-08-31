@@ -11,7 +11,7 @@ class ViewContent {
             </header>
             <section>
 
-        <?php foreach ($objStamps as $objStamp) $objStamp->injectShort(); ?>
+        <?php for ($i=0; $i < 5; $i++) $objStamp[i]->injectShort(); ?>
 
             </section>
         </main>
@@ -25,6 +25,23 @@ class ViewContent {
         </main>
         <?php
     }
+
+    static public function stampIndex($objStamps) {
+        ?>
+        <main>
+            <header>
+                <h2>Home</h2>
+                <p>All Stamps</p>
+            </header>
+            <section>
+
+        <?php foreach ($objStamps as $objStamp) $objStamp->injectShort(); ?>
+        
+            </section>
+        </main>
+        <?php
+    }
+
 
     static public function userShow($objUser) {
         ?>
@@ -125,7 +142,11 @@ class ViewContent {
                         <td><a href="user-show.php?id=<?= $userStamp["user_id"] ?>"><?= $userStamp["user_id"] ?></a></td>
                         <td><a href="stamp-show.php?id=<?= $userStamp["stamp_id"] ?>"><?= $userStamp["stamp_id"] ?></a></td>
                         <td><?= $userStamp["qty"] ?></td>
-                        <td><a href=""></a></td>
+                        <td>
+                            <a href="userStampForm.php?id=
+                            <?= $userStamp["user_id"] ?>+<?= $userStamp["stamp_id"] ?>">
+                            modifier</a>
+                        </td>
                     </tr>
                 <?php endforeach ?>
             </table>
