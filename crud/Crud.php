@@ -9,7 +9,13 @@ class Crud extends PDO {
         $this->dbname = $dbname;
     }
 
-    public function readStamps($tableOg, $targets = "*", $tablesMg = null, $field = "id", $order = "ASC") {
+    public function readStd($tableOg, $targets = "*", $tablesMg = null, $where = null, $field = "id", $order = "ASC") {
+        $sqlWhere = "";
+        if ($where) {
+            $target = $where["target"];
+            $value = $where["value"];
+            $sqlWhere = " WHERE $target = $value";
+        }
         if ($targets != "*") $targets = implode(", ", $targets);
         $sql = "SELECT $targets FROM $tableOg";
         if ($tablesMg) {
@@ -21,27 +27,39 @@ class Crud extends PDO {
             }
             $sql .= "$sqlMerge";
         } 
-        $sql .= ";";
+        $sql .= "$sqlWhere;";
         $query = $this->query($sql);
         return $query->fetchAll();
     }
 
-    public function readCatStamps($tableOg, $targets = "*", $tablesMg = null, $field = "id", $order = "ASC") {
-        if ($targets != "*") $targets = implode(", ", $targets);
-        $sql = "SELECT $targets FROM $tableOg";
-        if ($tablesMg) {
-            $sqlMerge = "";
-            foreach ($tablesMg as $tableMg) {
-                $idOg = $tableMg . "_id";
-                $id = $tableMg . ".id";
-                $sqlMerge .= " INNER JOIN $this->dbname.$tableMg ON $id = $idOg";
-            }
-            $sql .= "$sqlMerge";
-        } 
-        $sql .= ";";
+    public function readUserStamp($where = null) {
+        $sqlWhere = "";
+        if ($where) {
+            $target = $where["target"];
+            $value = $where["value"];
+            $sqlWhere = "WHERE $target = $value";
+        }
+        $tableOg = "user_stamp";
+        $targets = [
+            "stamp.id",
+            "stamp.name as name",
+            "stamp.year",
+            "stamp.origin",
+            "stamp.description",
+            "aspect.name as aspect", 
+            "category.name as category"
+        ];
+        $targets = implode(", ", $targets); 
+        $sql = "SELECT $targets FROM $tableOg
+            INNER JOIN user ON user_stamp.user_id = user.id 
+            INNER JOIN stamp ON user_stamp.stamp_id = stamp.id
+            INNER JOIN aspect ON stamp.aspect_id = aspect.id
+            INNER JOIN category ON stamp.category_id = category.id
+            $sqlWhere";
         $query = $this->query($sql);
         return $query->fetchAll();
     }
+
 
     /* public function readId($table, $value, $field = "id", $url = "client-index.php") {
         $sql = "SELECT * FROM $table WHERE $field = :$field";

@@ -2,13 +2,16 @@
 
 class Stamp {
     private 
+    $id,
     $name,
     $description,
+    $origin,
     $year,
     $category,
     $aspect;
 
     public function __construct($stamp) {
+        $this->id =$stamp["id"];
         $this->name = $stamp["name"];
         $this->description = $stamp["description"];
         $this->origin = $stamp["origin"];
@@ -21,7 +24,7 @@ class Stamp {
 
         <article class="stamp-card">
             <hgroup>
-                <h2><?= $this->name?></h2>
+                <h2><a href="stamp-show.php?id=<?= $this->id ?>"><?= $this->name?></a></h2>
                 <div>
                     <p><?= $this->origin ? $this->origin : "Origin Undefined" ?></p>
                     <p><?= $this->year ? $this->year : "Year Undefined" ?></p>

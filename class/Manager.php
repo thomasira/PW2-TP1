@@ -1,19 +1,16 @@
 <?php
 require "./crud/Crud.php";
 require "./class/Stamp.php";
+require "./class/User.php";
 
 class Manager {
-    private $stamps;
-    private $users;
-
-    public function setStamps() {
-        $objStamps = [];
-        $tableOg = "stamp";
-        $tablesMg = [
+    private $stampReq = [ 
+        "table" => "stamp",
+        "tablesMerge" => [
             "aspect",
             "category"
-        ];
-        $targets = [
+        ],
+        "targets" => [
             "stamp.id",
             "stamp.name as name",
             "stamp.year",
@@ -21,14 +18,41 @@ class Manager {
             "stamp.description",
             "aspect.name as aspect", 
             "category.name as category"
-        ];
+        ]
+    ];
+
+
+    public function getAllStamps() {
         $crud = new Crud("stamp");
-        $stamps = $crud->readStamps($tableOg, $targets, $tablesMg);
+        $stamps = $crud->readStd($this->stampReq["table"], $this->stampReq["targets"], $this->stampReq["tablesMerge"]);
         foreach ($stamps as $stamp) $objStamps[] = new Stamp($stamp);
-        $this->stamps = $objStamps;
+        return $objStamps;
     }
 
-    public function getStamps() {
-        return $this->stamps;
+
+    public function getOneStamp($id) {
+        $where = [
+            "target" => "stamp.id",
+            "value" => $id
+        ];
+        $crud = new Crud("stamp");
+        $stamps = $crud->readStd($this->stampReq["table"], $this->stampReq["targets"], $this->stampReq["tablesMerge"], $where);
+        foreach ($stamps as $stamp) $stamp = new Stamp($stamp);
+        return $stamp;
+    }
+
+    public function setUsers() {
+        $objUsers = [];
+        $objStamps = [];
+        $crud = new Crud("stamp");
+        $users = $crud->readStd("user");
+
+        foreach ($users as $user) {
+            $userId = $user["id"];
+            $stamps = [];
+            $userStamps = $crud->readUserStamp(["target" => "user.id", "value" => $userId]);
+            foreach ($userStamps as $userStamp) $objStamps[] = new Stamp($userStamp);
+            $objUsers[] = new User($user, $objStamps);
+        }
     }
 }
