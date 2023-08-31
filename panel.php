@@ -7,8 +7,10 @@ ViewLayout::schoolheader("home");
 ViewLayout::navigation();
 
 $manager = new Manager();
-$stamps = $manager->getStampNames();
-$users = $manager->getUserNames();
-ViewContent::panel($users, $stamps);
+$data["stamps"] = $manager->getStampNames();
+$data["users"] = $manager->getUserNames();
+$data["categories"] = $manager->getCategories();
+$data["aspects"] = $manager->getAspects();
+ViewContent::panel($data);
 ViewLayout::footer(); 
 ?>

@@ -6,11 +6,11 @@ require "./class/Manager.php";
 
 if (isset($_POST) && $_POST != null) {
     $manager = new Manager();
-    $manager->createUser($_POST);
-    header("location: ./panel.php?msg=1");
+    $manager->createAspect($_POST);
+    header("location: ./panel.php?msg=3");
 }
 ViewLayout::schoolheader("home");
 ViewLayout::navigation();
-ViewContent::userForm();
+ViewContent::AspectForm();
 ViewLayout::footer(); 
 ?>

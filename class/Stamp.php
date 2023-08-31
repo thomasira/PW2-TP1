@@ -1,14 +1,14 @@
 <?php
 
 class Stamp {
-/*     private 
+    private 
     $id,
     $name,
     $description,
     $origin,
     $year,
     $category,
-    $aspect; */
+    $aspect;
 
     public function __construct($stamp) {
         $this->id =$stamp["id"];
@@ -20,6 +20,11 @@ class Stamp {
         $this->aspect = $stamp["aspect"];
     }
 
+
+    public function getName() {
+        return $this->name;
+    }
+    
     public function injectShort() { 
         ?>
         <article>

@@ -7,8 +7,8 @@ ViewLayout::schoolHeader("home");
 ViewLayout::navigation();
 
 $manager = new Manager();
-$objStamps = $manager->getObjStamps();
+$userStamps = $manager->getUserStamps();
 
-ViewContent::home($objStamps);
+ViewContent::userStampIndex($userStamps);
 ViewLayout::footer(); 
 ?>

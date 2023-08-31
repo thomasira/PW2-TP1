@@ -21,7 +21,8 @@ class Manager {
         ]
     ];
 
-    public function getStamps() {
+    public function getObjStamps() {
+        $objStamps = [];
         $crud = new Crud("stamp");
         $stamps = $crud->readStd($this->stampReq["table"], $this->stampReq["targets"], $this->stampReq["tablesMerge"]);
         foreach ($stamps as $stamp) $objStamps[] = new Stamp($stamp);
@@ -29,6 +30,7 @@ class Manager {
     }
 
     public function getStampNames() {
+        
         $crud = new Crud("stamp");
         return $crud->readStd($this->stampReq["table"], ["stamp.name", "stamp.id"]);
     }
@@ -49,19 +51,34 @@ class Manager {
         return $crud->readStd("user", ["user.name", "user.id"]);
     }
 
-    public function getUsers() {
+    public function getObjUsers() {
         $objUsers = [];
-        $objStamps = [];
         $crud = new Crud("stamp");
         $users = $crud->readStd("user");
         foreach ($users as $user) {
+            $objStamps = [];
             $userId = $user["id"];
-            $stamps = [];
             $userStamps = $crud->readUserStamp(["target" => "user.id", "value" => $userId]);
             foreach ($userStamps as $userStamp) $objStamps[] = new Stamp($userStamp);
             $objUsers[] = new User($user, $objStamps);
         }
         return $objUsers;
+    }
+    public function getObjUser($id) {
+        $where = [
+            "target" => "user.id",
+            "value" => $id
+        ];
+        $crud = new Crud("stamp");
+        $users = $crud->readStd("user", "*", "", $where);
+        foreach ($users as $user) {
+            $objStamps = [];
+            $userId = $user["id"];
+            $userStamps = $crud->readUserStamp(["target" => "user.id", "value" => $userId]);
+            foreach ($userStamps as $userStamp) $objStamps[] = new Stamp($userStamp);
+            $objUser = new User($user, $objStamps);
+        } 
+        return $objUser;
     }
 
     public function getCategories() {
@@ -74,13 +91,28 @@ class Manager {
         return $crud->readStd("aspect");
     }
 
+    public function getUserStamps() {
+        $crud = new Crud("stamp");
+        return $crud->readStd("user_stamp");
+    }
+
     public function createUser($data) {
         $crud = new Crud("stamp");
-        $users = $crud->create("user", $data);
+        $crud->create("user", $data);
     }
 
     public function createStamp($data) {
         $crud = new Crud("stamp");
-        $users = $crud->create("stamp", $data);
+        $crud->create("stamp", $data);
+    }
+
+    public function createAspect($data) {
+        $crud = new Crud("stamp");
+        $crud->create("aspect", $data);
+    }
+
+    public function createCategory($data) {
+        $crud = new Crud("stamp");
+        $crud->create("category", $data);
     }
 }
