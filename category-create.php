@@ -9,7 +9,7 @@ if (isset($_POST) && $_POST != null) {
     $manager->createCategory($_POST);
     header("location: ./panel.php?msg=4");
 }
-ViewLayout::schoolheader("home");
+ViewLayout::schoolheader("category-create");
 ViewLayout::navigation();
 ViewContent::categoryForm();
 ViewLayout::footer(); 
