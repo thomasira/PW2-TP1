@@ -12,7 +12,7 @@ ViewLayout::schoolHeader("home");
 ViewLayout::navigation();
 
 $manager = new Manager();
-$objStamp = $manager->getOneStamp($id);
+$objStamp = $manager->getObjStamp($id);
 
 ViewContent::stampShow($objStamp);
 ViewLayout::footer();

@@ -8,6 +8,7 @@ class ViewContent {
         <main>
             <header>
                 <h2>Home</h2>
+                <p>recent entries</p>
             </header>
             <section>
 
@@ -34,6 +35,7 @@ class ViewContent {
         $msg = null;
         if (isset($_GET["msg"]) && $_GET["msg"] != null) {
             if ($_GET["msg"] == 1) $msg = "<p>user created</p>";
+            if ($_GET["msg"] == 2) $msg = "<p>stamp created</p>";
         }
         ?>
         <?= $msg ?>
@@ -46,7 +48,7 @@ class ViewContent {
                     <h3>All users</h3>
                     <ul>
                         <?php foreach ($users as $user) :?>
-                        <li><a href="./user-show.php?id=<?= $user->id ?>"><?= $user->name ?></a></li>
+                        <li><a href="./user-show.php?id=<?= $user["id"] ?>"><?= $user["name"] ?></a></li>
                         <?php endforeach ?>
                     </ul>
                     <a href="./user-create.php" class="button">create user</a>
@@ -55,7 +57,7 @@ class ViewContent {
                     <h3>All entries</h3>
                     <ul>
                     <?php foreach ($stamps as $stamp) :?>
-                        <li><a href="./stamp-show.php?id=<?= $stamp->id ?>"><?= $stamp->name ?></a></li>
+                        <li><a href="./stamp-show.php?id=<?= $stamp["id"] ?>"><?= $stamp["name"] ?></a></li>
                         <?php endforeach ?>
                     </ul>
                     <a href="./stamp-create.php" class="button">add stamp</a>
@@ -83,7 +85,6 @@ class ViewContent {
     }
 
     static public function stampForm($categories, $aspects) {
-        print_r($data);
         ?>
         <main>
            <form action="" method="post">
@@ -96,16 +97,16 @@ class ViewContent {
                 <label>Year:
                     <input type="text" name="year">
                 </label>
-                <label>Category
-                    <select name="category">
+                <label>Category:
+                    <select name="category_id">
                         <?php foreach ($categories as $category) : ?>
                         <option value="<?= $category["id"] ?>"><?= $category["name"] ?></option>
                         <?php endforeach ?>
                     </select>
                 </label>
-                <label>Aspect
-                    <select name="aspect">
-                        <?php foreach ($aspects as $aspects) : ?>
+                <label>Aspect:
+                    <select name="aspect_id">
+                        <?php foreach ($aspects as $aspect) : ?>
                         <option value="<?= $aspect["id"] ?>"><?= $aspect["name"] ?></option>
                         <?php endforeach ?>
                     </select>
@@ -113,7 +114,6 @@ class ViewContent {
                 <label>description:
                     <textarea name="description" cols="30" rows="10"></textarea>
                 </label>
-
                 <input type="submit" value="create">
            </form>
         </main>

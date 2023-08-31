@@ -12,8 +12,6 @@ if (isset($_POST) && $_POST != null) {
 
 ViewLayout::schoolheader("home");
 ViewLayout::navigation();
-
 ViewContent::userForm();
-
 ViewLayout::footer(); 
 ?>

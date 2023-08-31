@@ -21,15 +21,19 @@ class Manager {
         ]
     ];
 
-    public function getAllStamps() {
+    public function getStamps() {
         $crud = new Crud("stamp");
         $stamps = $crud->readStd($this->stampReq["table"], $this->stampReq["targets"], $this->stampReq["tablesMerge"]);
         foreach ($stamps as $stamp) $objStamps[] = new Stamp($stamp);
         return $objStamps;
     }
 
+    public function getStampNames() {
+        $crud = new Crud("stamp");
+        return $crud->readStd($this->stampReq["table"], ["stamp.name", "stamp.id"]);
+    }
 
-    public function getOneStamp($id) {
+    public function getObjStamp($id) {
         $where = [
             "target" => "stamp.id",
             "value" => $id
@@ -40,7 +44,12 @@ class Manager {
         return $objStamp;
     }
 
-    public function getAllUsers() {
+    public function getUserNames() {
+        $crud = new Crud("stamp");
+        return $crud->readStd("user", ["user.name", "user.id"]);
+    }
+
+    public function getUsers() {
         $objUsers = [];
         $objStamps = [];
         $crud = new Crud("stamp");
@@ -55,14 +64,23 @@ class Manager {
         return $objUsers;
     }
 
-    public function getAllCategories() {
+    public function getCategories() {
         $crud = new Crud("stamp");
         return $crud->readStd("category");
     }
 
+    public function getAspects() {
+        $crud = new Crud("stamp");
+        return $crud->readStd("aspect");
+    }
 
     public function createUser($data) {
         $crud = new Crud("stamp");
         $users = $crud->create("user", $data);
+    }
+
+    public function createStamp($data) {
+        $crud = new Crud("stamp");
+        $users = $crud->create("stamp", $data);
     }
 }

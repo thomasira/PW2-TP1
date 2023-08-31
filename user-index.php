@@ -3,12 +3,11 @@ require "./class/ViewLayout.php";
 require "./class/ViewContent.php";
 require "./class/Manager.php";
 
-ViewLayout::schoolheader("home");
+ViewLayout::schoolHeader("home");
 ViewLayout::navigation();
-
 $manager = new Manager();
-$stamps = $manager->getStampNames();
-$users = $manager->getUserNames();
-ViewContent::panel($users, $stamps);
+$objUsers = $manager->getUsers();
+
+ViewContent::home($objStamps);
 ViewLayout::footer(); 
 ?>
