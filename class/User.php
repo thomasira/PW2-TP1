@@ -4,8 +4,8 @@ class User {
     private 
         $id,
         $name,
-        $email,
-        $stamps;
+        $email;
+    public $stamps;
 
 
     public function __construct($user, $userStamps) {
@@ -17,6 +17,9 @@ class User {
 
     public function getName() {
         return $this->name;
+    }
+    public function getEmail() {
+        return $this->email;
     }
 
 
@@ -32,11 +35,14 @@ class User {
             <h3>My stamps</h3>
             <ul>
                 <?php foreach($this->stamps as $stamp) : ?>
-                    <li><?= $stamp->getName() ?></li>
+                    <li><a href="stamp-show.php?id=<?= $stamp["stamp"]->getId() ?>"><?= $stamp["stamp"]->getName() ?></a></li>
                 <?php endforeach ?>
             </ul>
         </section>
-
+        <form action="user-modify.php" method="post">
+            <input type="hidden" name="id" value="<?= $this->id ?>">
+            <input type="submit" value="modify user">
+        </form>
         <?php
     }
 }

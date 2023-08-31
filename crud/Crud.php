@@ -32,7 +32,7 @@ class Crud extends PDO {
         return $query->fetchAll();
     }
 
-    public function readUserStamp($where = null) {
+    public function readUserStamp($targets = "*", $where = null) {
         $sqlWhere = "";
         if ($where) {
             $target = $where["target"];
@@ -40,16 +40,7 @@ class Crud extends PDO {
             $sqlWhere = "WHERE $target = $value";
         }
         $tableOg = "user_stamp";
-        $targets = [
-            "stamp.id",
-            "stamp.name as name",
-            "stamp.year",
-            "stamp.origin",
-            "stamp.description",
-            "aspect.name as aspect", 
-            "category.name as category"
-        ];
-        $targets = implode(", ", $targets); 
+        if ($targets != "*") $targets = implode(", ", $targets); 
         $sql = "SELECT $targets FROM $tableOg
             INNER JOIN user ON user_stamp.user_id = user.id 
             INNER JOIN stamp ON user_stamp.stamp_id = stamp.id

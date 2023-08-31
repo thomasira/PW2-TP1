@@ -5,34 +5,36 @@ require "./class/User.php";
 
 class Manager {
     private $stampReq = [ 
-        "table" => "stamp",
-        "tablesMerge" => [
-            "aspect",
-            "category"
-        ],
-        "targets" => [
-            "stamp.id",
-            "stamp.name as name",
-            "stamp.year",
-            "stamp.origin",
-            "stamp.description",
-            "aspect.name as aspect", 
-            "category.name as category"
-        ]
+            "table" => "stamp",
+            "tablesMerge" => [
+                "aspect",
+                "category"
+            ],
+            "targets" => [
+                "stamp.id",
+                "stamp.name as name",
+                "stamp.year",
+                "stamp.origin",
+                "stamp.description",
+                "aspect.name as aspect", 
+                "category.name as category"
+            ]
     ];
+    private $crud;
 
-    public function getObjStamps() {
-        $objStamps = [];
-        $crud = new Crud("stamp");
-        $stamps = $crud->readStd($this->stampReq["table"], $this->stampReq["targets"], $this->stampReq["tablesMerge"]);
-        foreach ($stamps as $stamp) $objStamps[] = new Stamp($stamp);
-        return $objStamps;
+    public function __construct() {
+        $this->crud = new Crud("stamp");
     }
 
     public function getStampNames() {
-        
-        $crud = new Crud("stamp");
-        return $crud->readStd($this->stampReq["table"], ["stamp.name", "stamp.id"]);
+        return $this->crud->readStd($this->stampReq["table"], ["stamp.name", "stamp.id"]);
+    }
+
+    public function getObjStamps() {
+        $objStamps = [];
+        $stamps = $this->crud->readStd($this->stampReq["table"], $this->stampReq["targets"], $this->stampReq["tablesMerge"]);
+        foreach ($stamps as $stamp) $objStamps[] = new Stamp($stamp);
+        return $objStamps;
     }
 
     public function getObjStamp($id) {
@@ -40,87 +42,88 @@ class Manager {
             "target" => "stamp.id",
             "value" => $id
         ];
-        $crud = new Crud("stamp");
-        $stamps = $crud->readStd($this->stampReq["table"], $this->stampReq["targets"], $this->stampReq["tablesMerge"], $where);
+        $stamps = $this->crud->readStd($this->stampReq["table"], $this->stampReq["targets"], $this->stampReq["tablesMerge"], $where);
         foreach ($stamps as $stamp) $objStamp = new Stamp($stamp);
         return $objStamp;
     }
 
     public function getUserNames() {
-        $crud = new Crud("stamp");
-        return $crud->readStd("user", ["user.name", "user.id"]);
+        return $this->crud->readStd("user", ["user.name", "user.id"]);
     }
 
     public function getObjUsers() {
         $objUsers = [];
-        $crud = new Crud("stamp");
-        $users = $crud->readStd("user");
+        $users = $this->crud->readStd("user");
         foreach ($users as $user) {
             $objStamps = [];
             $userId = $user["id"];
             $userStamps = $crud->readUserStamp(["target" => "user.id", "value" => $userId]);
-            foreach ($userStamps as $userStamp) $objStamps[] = new Stamp($userStamp);
+            foreach ($userStamps as $userStamp) $objStamps[] = ["stamp" => new Stamp($userStamp), "qty" => $userStamp["qty"]];
             $objUsers[] = new User($user, $objStamps);
         }
         return $objUsers;
     }
+
     public function getObjUser($id) {
+        $stampsTargets = [
+            "stamp.id",
+            "stamp.name as name",
+            "stamp.year",
+            "stamp.origin",
+            "stamp.description",
+            "aspect.name as aspect", 
+            "category.name as category",
+            "user_stamp.qty"
+        ];
         $where = [
             "target" => "user.id",
             "value" => $id
         ];
-        $crud = new Crud("stamp");
-        $users = $crud->readStd("user", "*", "", $where);
+        $users = $this->crud->readStd("user", "*", "", $where);
         foreach ($users as $user) {
             $objStamps = [];
             $userId = $user["id"];
-            $userStamps = $crud->readUserStamp(["target" => "user.id", "value" => $userId]);
-            foreach ($userStamps as $userStamp) $objStamps[] = new Stamp($userStamp);
+            $userStamps = $this->crud->readUserStamp($stampsTargets, $where);
+            foreach ($userStamps as $userStamp) $objStamps[] = ["stamp" => new Stamp($userStamp), "qty" => $userStamp["qty"]];
             $objUser = new User($user, $objStamps);
         } 
         return $objUser;
     }
 
     public function getCategories() {
-        $crud = new Crud("stamp");
-        return $crud->readStd("category");
+        return $this->crud->readStd("category");
     }
 
     public function getAspects() {
-        $crud = new Crud("stamp");
-        return $crud->readStd("aspect");
+        return $this->crud->readStd("aspect");
     }
 
     public function getUserStamps() {
-        $crud = new Crud("stamp");
-        return $crud->readStd("user_stamp");
+        return $this->crud->readUserStamp();
     }
 
-    public function getAll() {
-        $data["stamps"] = $manager->getStampNames();
-        $data["users"] = $manager->getUserNames();
-        $data["categories"] = $manager->getCategories();
-        $data["aspects"] = $manager->getAspects();
+    public function getAllShort() {
+        $data["stamps"] = $this->getStampNames();
+        $data["users"] = $this->getUserNames();
+        $data["categories"] = $this->getCategories();
+        $data["aspects"] = $this->getAspects();
         return $data;
     }
 
     public function createUser($data) {
-        $crud = new Crud("stamp");
-        $crud->create("user", $data);
-    }
-
-    public function createStamp($data) {
-        $crud = new Crud("stamp");
-        $crud->create("stamp", $data);
-    }
-
-    public function createAspect($data) {
-        $crud = new Crud("stamp");
-        $crud->create("aspect", $data);
+        $this->crud->create("user", $data);
     }
 
     public function createCategory($data) {
-        $crud = new Crud("stamp");
-        $crud->create("category", $data);
+        $this->crud->create("category", $data);
     }
+
+    public function createStamp($data) {
+        $this->crud->create("stamp", $data);
+    }
+
+    public function createAspect($data) {
+        $this->crud->create("aspect", $data);
+    }
+
 }

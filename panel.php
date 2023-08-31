@@ -7,7 +7,7 @@ ViewLayout::schoolheader("home");
 ViewLayout::navigation();
 
 $manager = new Manager();
-$data = $manager->getAll();
+$data = $manager->getAllShort();
 
 ViewContent::panel($data);
 ViewLayout::footer(); 

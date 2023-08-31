@@ -11,7 +11,7 @@ class ViewContent {
             </header>
             <section>
 
-        <?php for ($i=0; $i < 5; $i++) $objStamp[i]->injectShort(); ?>
+        <?php for ($i=0; $i < 5; $i++) $objStamps[$i]->injectShort(); ?>
 
             </section>
         </main>
@@ -94,7 +94,7 @@ class ViewContent {
                     <h3>All aspects</h3>
                     <ul>
                     <?php foreach ($aspects as $aspect) :?>
-                        <li><a href="./aspect-show.php?id=<?= $aspect["id"] ?>"><?= $aspect["name"] ?></a></li>
+                        <li><?= $aspect["name"] ?></a></li>
                         <?php endforeach ?>
                     </ul>
                     <a href="./aspect-create.php" class="button">add aspect</a>
@@ -103,56 +103,15 @@ class ViewContent {
                     <h3>All categories</h3>
                     <ul>
                     <?php foreach ($categories as $category) :?>
-                        <li><a href="./category-show.php?id=<?= $category["id"] ?>"><?= $category["name"] ?></a></li>
+                        <li><?= $category["name"] ?></a></li>
                         <?php endforeach ?>
                     </ul>
                     <a href="./category-create.php" class="button">add category</a>
-                </section>
-                <section>
-                    <h3><a href="./userStamp-index.php">See or modify relations</a></h3>
                 </section>
             </div>
         </main>
         <?php
     } 
-
-    static public function userStampIndex($userStamps) {
-        ?>
-        <main>
-            <header>
-                <h2>User Stamp relations</h2>
-            </header>
-            <table>
-                <thead>
-                    <th>
-                        User
-                    </th>
-                    <th>
-                        Stamp
-                    </th>
-                    <th>
-                        Qty
-                    </th>
-                    <th>
-
-                    </th>
-                </thead>
-                <?php foreach ($userStamps as $userStamp) :?>
-                    <tr>
-                        <td><a href="user-show.php?id=<?= $userStamp["user_id"] ?>"><?= $userStamp["user_id"] ?></a></td>
-                        <td><a href="stamp-show.php?id=<?= $userStamp["stamp_id"] ?>"><?= $userStamp["stamp_id"] ?></a></td>
-                        <td><?= $userStamp["qty"] ?></td>
-                        <td>
-                            <a href="userStampForm.php?id=
-                            <?= $userStamp["user_id"] ?>+<?= $userStamp["stamp_id"] ?>">
-                            modifier</a>
-                        </td>
-                    </tr>
-                <?php endforeach ?>
-            </table>
-        </main>
-        <?php
-    }
 
     static public function userForm() {
         ?>
@@ -169,6 +128,34 @@ class ViewContent {
                 </label>
                 <input type="submit" value="create">
            </form>
+        </main>
+        <?php
+    }
+
+    static public function userModify($objUser) {
+        ?>
+        <main>
+            <header>
+                <h2>Modify User</h2>
+            </header>
+           <section>
+               <form action="" method="post">
+                    <label>Name:
+                        <input type="text" name="name" value="<?= $objUser->getName() ?>" required>
+                    </label>
+                    <label>Email:
+                        <input type="text" name="email" value="<?= $objUser->getEmail() ?>" required>
+                    </label>
+                    <input type="submit" value="modify">
+               </form>
+           </section>
+           <section>
+               <ul>
+                <?php foreach ($objUser->stamps as $userStamp) : ?>
+                    <li><?= $userStamp["stamp"]->getName() ?> <small>qty: <?= $userStamp["qty"] ?></small></li>
+                <?php endforeach ?>
+               </ul>
+           </section>
         </main>
         <?php
     }
@@ -243,5 +230,6 @@ class ViewContent {
         </main>
         <?php
     }
+
 }
 ?>
