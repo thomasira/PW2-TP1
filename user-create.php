@@ -9,7 +9,7 @@ if (isset($_POST) && $_POST != null) {
     $manager->createUser($_POST);
     header("location: ./panel.php?msg=1");
 }
-ViewLayout::schoolheader("home");
+ViewLayout::schoolheader("user-create");
 ViewLayout::navigation();
 ViewContent::userForm();
 ViewLayout::footer(); 

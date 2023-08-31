@@ -38,6 +38,7 @@ class User {
                     <li><a href="stamp-show.php?id=<?= $stamp["stamp"]->getId() ?>"><?= $stamp["stamp"]->getName() ?></a></li>
                 <?php endforeach ?>
             </ul>
+            <a href="stamp-create.php?id=<?= $this->id ?>">add stamp</a>
         </section>
         <form action="user-modify.php" method="post">
             <input type="hidden" name="id" value="<?= $this->id ?>">
