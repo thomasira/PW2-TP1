@@ -51,18 +51,18 @@ class Manager {
         return $this->crud->readStd("user", ["user.name", "user.id"]);
     }
 
-    public function getObjUsers() {
+/*     public function getObjUsers() {
         $objUsers = [];
         $users = $this->crud->readStd("user");
         foreach ($users as $user) {
             $objStamps = [];
             $userId = $user["id"];
-            $userStamps = $crud->readUserStamp(["target" => "user.id", "value" => $userId]);
+            $userStamps = $this->crud->readUserStamp($this->stampReq["targets"], ["target" => "user.id", "value" => $userId]);
             foreach ($userStamps as $userStamp) $objStamps[] = ["stamp" => new Stamp($userStamp), "qty" => $userStamp["qty"]];
             $objUsers[] = new User($user, $objStamps);
         }
         return $objUsers;
-    }
+    } */
 
     public function getObjUser($id) {
         $stampsTargets = [

@@ -30,8 +30,7 @@ class ViewContent {
         ?>
         <main>
             <header>
-                <h2>Home</h2>
-                <p>All Stamps</p>
+                <h2>All Stamps</h2>
             </header>
             <section>
 
@@ -42,7 +41,24 @@ class ViewContent {
         <?php
     }
 
+    static public function userIndex($users) {
+        ?>
+        <main>
+            <header>
+                <h2>Users</h2>
+            </header>
+            <section>
 
+            <?php foreach ($users as $user) : ?>
+                <p>
+                    <h3><a href="user-show.php?id=<?= $user["id"] ?>"><?= $user["name"] ?></a></h3>
+                </p>
+            <?php endforeach ?>
+            </section>
+        </main>
+        <?php
+    }
+    
     static public function userShow($objUser) {
         ?>
         <main>
