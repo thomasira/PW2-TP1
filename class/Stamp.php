@@ -1,7 +1,7 @@
 <?php
 
 class Stamp {
-    private 
+    public
     $id,
     $name,
     $description,
@@ -57,6 +57,12 @@ class Stamp {
             <li>description: <?= $this->description ? $this->description : "Undefined" ?></li>
             <li>aspect: <?= $this->aspect? $this->aspect : "Undefined" ?></li>
         </ul>
+        <section>
+            <form action="stamp-modify.php" method="post">
+                <input type="hidden" name="id" value="<?= $this->id ?>">
+                <input type="submit" value="modify">
+        </form>
+        </section>
         <?php
     }
 }

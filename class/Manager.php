@@ -126,4 +126,7 @@ class Manager {
         $this->crud->create("aspect", $data);
     }
 
+    public function Update($data) {
+        return $this->crud->update($data);
+    }
 }

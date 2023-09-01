@@ -61,6 +61,21 @@ class Crud extends PDO {
         return $this->lastInsertId();
     }
 
+    public function update($data) {
+        $table = $data["table"];
+        $id = $data["id"];
+        $set = "";
+        foreach ($data as $key => $value) {
+            if ($key != "table") $set .= " $key = :$key,";
+        }
+        $set = rtrim($set, ",");
+        $sql = "UPDATE $table SET $set WHERE id = :id";
+        $query = $this->prepare($sql);
+        foreach ($data as $key => $value) $query->bindValue(":$key", $value);
+        $query->execute();
+        return $id;
+    }
+
     /* public function readId($table, $value, $field = "id", $url = "client-index.php") {
         $sql = "SELECT * FROM $table WHERE $field = :$field";
         $query = $this->prepare($sql);

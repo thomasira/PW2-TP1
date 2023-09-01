@@ -215,6 +215,54 @@ class ViewContent {
         <?php
     }
 
+
+    static public function stampModify($objStamp, $data) {
+        ?>
+        <main>
+            <header>
+                <h2>Modify Stamp</h2>
+            </header>
+           <form action="update.php" method="post">
+                <label>Name:
+                    <input type="text" name="name" value="<?= $objStamp->name ?>"required>
+                </label>
+                <label>Origin:
+                    <input type="text" name="origin" value="<?= $objStamp->origin ?>">
+                </label>
+                <label>Year:
+                    <input type="text" name="year" value="<?= $objStamp->year ?>">
+                </label>
+                <label>Category:
+                    <select name="category_id">
+                        <?php foreach ($data["categories"] as $category) : ?>
+                        <option value="<?= $category["id"] ?>"><?= $category["name"] ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </label>
+                <label>Aspect:
+                    <select name="aspect_id">
+                        <?php foreach ($data["aspects"] as $aspect) : ?>
+                        <option value="<?= $aspect["id"] ?>"><?= $aspect["name"] ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </label>
+                <label>description:
+                    <textarea name="description" cols="30" rows="10"><?= $objStamp->description ?></textarea>
+                </label>
+                <input type="hidden" name="table" value="stamp">
+                <input type="hidden" name="id" value="<?= $objStamp->id ?>">
+                <input type="submit" value="modify">
+           </form>
+           <form action="stamp-delete.php" method="post">
+                <input type="hidden" name="id" value="<?= $objStamp->id ?>">
+                <input type="submit" value="delete">
+           </form>
+        </main>
+        <?php
+    }
+
+
+
     static public function AspectForm() {
         ?>
         <main>
