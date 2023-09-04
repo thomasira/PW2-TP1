@@ -83,7 +83,7 @@ class Manager {
     public function create($data) {
         $lastId = $this->crud->create($data["table"], $data["data"]);
         if ($data["table"] == "stamp" && isset($data["category_id"])) {
-            foreach ($data["category_id"] as $categoryId => $value) {
+            foreach ($data["category_id"] as $categoryId => $on) {
                 $stampCatData = [
                     "stamp_id" => $lastId,
                     "category_id" => $categoryId
@@ -93,7 +93,6 @@ class Manager {
         }
         return $lastId;
     }
-
 
     public function Update($data) {
         return $this->crud->update($data);

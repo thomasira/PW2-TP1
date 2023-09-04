@@ -32,25 +32,6 @@ class Crud extends PDO {
         return $query->fetchAll();
     }
 
-    public function readUserStamp($targets = "*", $where = null) {
-        $sqlWhere = "";
-        if ($where) {
-            $target = $where["target"];
-            $value = $where["value"];
-            $sqlWhere = "WHERE $target = $value";
-        }
-        $tableOg = "user_stamp";
-        if ($targets != "*") $targets = implode(", ", $targets); 
-        $sql = "SELECT $targets FROM $tableOg
-            INNER JOIN user ON user_stamp.user_id = user.id 
-            INNER JOIN stamp ON user_stamp.stamp_id = stamp.id
-            INNER JOIN aspect ON stamp.aspect_id = aspect.id
-            INNER JOIN category ON stamp.category_id = category.id
-            $sqlWhere";
-        $query = $this->query($sql);
-        return $query->fetchAll();
-    }
-
     public function create($table, $data) {
         $fieldName = implode(", ", array_keys($data));
         $fieldSafe = ":" . implode(", :", array_keys($data));
