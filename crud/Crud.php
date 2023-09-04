@@ -28,8 +28,6 @@ class Crud extends PDO {
             $sql .= "$sqlMerge";
         } 
         $sql .= "$sqlWhere;";
-/*         print_r($sql);
-        die(); */
         $query = $this->query($sql);
         return $query->fetchAll();
     }
@@ -58,7 +56,9 @@ class Crud extends PDO {
         $fieldSafe = ":" . implode(", :", array_keys($data));
         $sql = "INSERT INTO $table ($fieldName) VALUES ($fieldSafe)";
         $query = $this->prepare($sql);
-        foreach ($data as $key => $value) $query->bindValue(":$key", $value);
+        foreach ($data as $key => $value) {
+            $query->bindValue(":$key", $value);
+        }
         $query->execute();
         return $this->lastInsertId();
     }

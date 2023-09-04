@@ -18,8 +18,8 @@ class User {
     public function getName() {
         return $this->name;
     }
-    public function getEmail() {
-        return $this->email;
+    public function getId() {
+        return $this->id;
     }
 
 
@@ -35,7 +35,7 @@ class User {
             <h3>My stamps</h3>
             <ul>
                 <?php foreach($this->stamps as $stamp) : ?>
-                    <li><a href="stamp-show.php?id=<?= $stamp["stamp"]->getId() ?>"><?= $stamp["stamp"]->getName() ?></a></li>
+                    <li><?php $stamp->injectShort() ?></a></li>
                 <?php endforeach ?>
             </ul>
             <form action="stamp-create.php" method="post">
@@ -47,6 +47,26 @@ class User {
             <input type="hidden" name="id" value="<?= $this->id ?>">
             <input type="submit" value="modify user">
         </form>
+        <?php
+    }
+
+    static public function userCreateForm() {
+        ?>
+        <main>
+            <header>
+                <h2>Create User</h2>
+            </header>
+           <form action="create.php" method="post">
+                <input type="hidden" name="table" value="user">
+                <label>Name:
+                    <input type="text" name="data[name]" required>
+                </label>
+                <label>Email:
+                    <input type="text" name="data[email]">
+                </label>
+                <input type="submit" value="create">
+           </form>
+        </main>
         <?php
     }
 }

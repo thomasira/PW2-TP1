@@ -51,7 +51,7 @@ class ViewContent {
 
             <?php foreach ($users as $user) : ?>
                 <p>
-                    <h3><a href="user-show.php?id=<?= $user["id"] ?>"><?= $user["name"] ?></a></h3>
+                    <h3><a href="user-show.php?id=<?= $user->getId() ?>"><?= $user->getName() ?></a></h3>
                 </p>
             <?php endforeach ?>
             </section>
@@ -59,10 +59,12 @@ class ViewContent {
         <?php
     }
     
-    static public function userShow($objUser) {
+    static public function userShow($objUsers) {
         ?>
         <main>
-           <?php $objUser->injectLong(); ?>
+
+        <?php foreach ($objUsers as $objUser) $objUser->injectLong() ?>
+
         </main>
         <?php
     }
@@ -110,7 +112,7 @@ class ViewContent {
                     <h3>All aspects</h3>
                     <ul>
                     <?php foreach ($aspects as $aspect) :?>
-                        <li><?= $aspect["name"] ?></a></li>
+                        <li><?= $aspect["aspect"] ?></a></li>
                         <?php endforeach ?>
                     </ul>
                     <a href="./aspect-create.php" class="button">add aspect</a>
@@ -119,7 +121,7 @@ class ViewContent {
                     <h3>All categories</h3>
                     <ul>
                     <?php foreach ($categories as $category) :?>
-                        <li><?= $category["name"] ?></a></li>
+                        <li><?= $category["category"] ?></a></li>
                         <?php endforeach ?>
                     </ul>
                     <a href="./category-create.php" class="button">add category</a>
@@ -129,24 +131,7 @@ class ViewContent {
         <?php
     } 
 
-    static public function userForm() {
-        ?>
-        <main>
-            <header>
-                <h2>Create User</h2>
-            </header>
-           <form action="" method="post">
-                <label>Name:
-                    <input type="text" name="name" required>
-                </label>
-                <label>Email:
-                    <input type="text" name="email" required>
-                </label>
-                <input type="submit" value="create">
-           </form>
-        </main>
-        <?php
-    }
+
 
     static public function userModify($objUser) {
         ?>
@@ -176,47 +161,10 @@ class ViewContent {
         <?php
     }
 
-    static public function stampForm($categories, $aspects) {
-        ?>
-        <main>
-            <header>
-                <h2>Add Stamp</h2>
-            </header>
-           <form action="" method="post">
-                <label>Name:
-                    <input type="text" name="name" required>
-                </label>
-                <label>Origin:
-                    <input type="text" name="origin">
-                </label>
-                <label>Year:
-                    <input type="text" name="year">
-                </label>
-                <label>Category:
-                    <select name="category_id">
-                        <?php foreach ($categories as $category) : ?>
-                        <option value="<?= $category["id"] ?>"><?= $category["name"] ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </label>
-                <label>Aspect:
-                    <select name="aspect_id">
-                        <?php foreach ($aspects as $aspect) : ?>
-                        <option value="<?= $aspect["id"] ?>"><?= $aspect["name"] ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </label>
-                <label>description:
-                    <textarea name="description" cols="30" rows="10"></textarea>
-                </label>
-                <input type="submit" value="create">
-           </form>
-        </main>
-        <?php
-    }
+     
 
 
-    static public function stampModify($objStamp, $data) {
+/*     static public function stampModify($objStamp, $data) {
         ?>
         <main>
             <header>
@@ -259,19 +207,20 @@ class ViewContent {
            </form>
         </main>
         <?php
-    }
+    } */
 
 
 
-    static public function AspectForm() {
+    static public function aspectForm() {
         ?>
         <main>
             <header>
                 <h2>Add Aspect</h2>
             </header>
-           <form action="" method="post">
+           <form action="create.php" method="post">
+                <input type="hidden" name="table" value="aspect">
                 <label>Name:
-                    <input type="text" name="name" required>
+                    <input type="text" name="data[aspect]" required>
                 </label>
                 <input type="submit" value="create">
            </form>
@@ -279,15 +228,16 @@ class ViewContent {
         <?php
     }
 
-    static public function CategoryForm() {
+    static public function categoryForm() {
         ?>
         <main>
             <header>
                 <h2>Add Category</h2>
             </header>
-           <form action="" method="post">
+           <form action="create.php" method="post">
+            <input type="hidden" name="table" value="category">
                 <label>Name:
-                    <input type="text" name="name" required>
+                    <input type="text" name="data[category]" required>
                 </label>
                 <input type="submit" value="create">
            </form>
