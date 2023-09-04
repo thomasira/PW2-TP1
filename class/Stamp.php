@@ -156,6 +156,7 @@ class Stamp {
            </form>
            <form action="delete.php" method="post">
                 <input type="hidden" name="id" value="<?= $this->id ?>">
+                <input type="hidden" name="table" value="stamp">
                 <input type="submit" value="delete">
            </form>
         </main>
