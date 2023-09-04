@@ -19,17 +19,28 @@ USE `stamp` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `stamp`.`category` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `category` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stamp`.`condition`
+-- Table `stamp`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stamp`.`condition` (
+CREATE TABLE IF NOT EXISTS `stamp`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `stamp`.`aspect`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stamp`.`aspect` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `aspect` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -40,55 +51,44 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `stamp`.`stamp` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `year` INT NULL,
+  `description` TEXT NULL,
   `origin` VARCHAR(45) NULL,
-  `category_id` INT NOT NULL,
-  `condition_id` INT NOT NULL,
+  `year` INT NULL,
+  `user_id` INT NOT NULL,
+  `aspect_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_stamp_category_idx` (`category_id` ASC) VISIBLE,
-  INDEX `fk_stamp_condition1_idx` (`condition_id` ASC) VISIBLE,
-  CONSTRAINT `fk_stamp_category`
-    FOREIGN KEY (`category_id`)
-    REFERENCES `stamp`.`category` (`id`)
+  INDEX `fk_stamp_user_idx` (`user_id` ASC),
+  INDEX `fk_stamp_aspect1_idx` (`aspect_id` ASC),
+  CONSTRAINT `fk_stamp_user`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `stamp`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_stamp_condition1`
-    FOREIGN KEY (`condition_id`)
-    REFERENCES `stamp`.`condition` (`id`)
+  CONSTRAINT `fk_stamp_aspect1`
+    FOREIGN KEY (`aspect_id`)
+    REFERENCES `stamp`.`aspect` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `stamp`.`user`
+-- Table `stamp`.`stamp_has_category`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stamp`.`user` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `stamp`.`user_stamp`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `stamp`.`user_stamp` (
+CREATE TABLE IF NOT EXISTS `stamp`.`stamp_has_category` (
   `stamp_id` INT NOT NULL,
-  `user_id` INT NOT NULL,
-  `qty` INT NOT NULL DEFAULT 1,
-  PRIMARY KEY (`stamp_id`, `user_id`),
-  INDEX `fk_stamp_has_user_user1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_stamp_has_user_stamp1_idx` (`stamp_id` ASC) VISIBLE,
-  CONSTRAINT `fk_stamp_has_user_stamp1`
+  `category_id` INT NOT NULL,
+  PRIMARY KEY (`stamp_id`, `category_id`),
+  INDEX `fk_stamp_has_category_category1_idx` (`category_id` ASC),
+  INDEX `fk_stamp_has_category_stamp1_idx` (`stamp_id` ASC),
+  CONSTRAINT `fk_stamp_has_category_stamp1`
     FOREIGN KEY (`stamp_id`)
     REFERENCES `stamp`.`stamp` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_stamp_has_user_user1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `stamp`.`user` (`id`)
+  CONSTRAINT `fk_stamp_has_category_category1`
+    FOREIGN KEY (`category_id`)
+    REFERENCES `stamp`.`category` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -97,4 +97,3 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-

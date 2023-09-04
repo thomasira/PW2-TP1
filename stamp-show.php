@@ -12,8 +12,7 @@ ViewLayout::schoolHeader("home");
 ViewLayout::navigation();
 
 $manager = new Manager();
-$objStamp = $manager->getObjStamp($id);
-
-ViewContent::stampShow($objStamp);
+$objStamps = $manager->getObjStamps(["target" => "stamp.id", "value" => $id]);
+ViewContent::stampShow($objStamps);
 ViewLayout::footer();
 ?>

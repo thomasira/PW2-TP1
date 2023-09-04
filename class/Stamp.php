@@ -1,25 +1,24 @@
 <?php
 
 class Stamp {
-    public
+    private
     $id,
     $name,
     $description,
     $origin,
     $year,
-    $category,
+    $categories,
     $aspect;
 
-    public function __construct($stamp) {
+    public function __construct($stamp, $categories) {
         $this->id =$stamp["id"];
         $this->name = $stamp["name"];
         $this->description = $stamp["description"];
         $this->origin = $stamp["origin"];
         $this->year = $stamp["year"];
-        $this->category = $stamp["category"];
         $this->aspect = $stamp["aspect"];
+        $this->categories = $categories;
     }
-
 
     public function getName() {
         return $this->name;
@@ -61,7 +60,7 @@ class Stamp {
             <form action="stamp-modify.php" method="post">
                 <input type="hidden" name="id" value="<?= $this->id ?>">
                 <input type="submit" value="modify">
-        </form>
+            </form>
         </section>
         <?php
     }

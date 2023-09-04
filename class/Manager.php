@@ -4,22 +4,6 @@ require "./class/Stamp.php";
 require "./class/User.php";
 
 class Manager {
-    private $stampReq = [ 
-            "table" => "stamp",
-            "tablesMerge" => [
-                "aspect",
-                "category"
-            ],
-            "targets" => [
-                "stamp.id",
-                "stamp.name as name",
-                "stamp.year",
-                "stamp.origin",
-                "stamp.description",
-                "aspect.name as aspect", 
-                "category.name as category"
-            ]
-    ];
     private $crud;
 
     public function __construct() {
@@ -30,10 +14,30 @@ class Manager {
         return $this->crud->readStd($this->stampReq["table"], ["stamp.name", "stamp.id"]);
     }
 
-    public function getObjStamps() {
+    public function getObjStamps($where = null) {
         $objStamps = [];
-        $stamps = $this->crud->readStd($this->stampReq["table"], $this->stampReq["targets"], $this->stampReq["tablesMerge"]);
-        foreach ($stamps as $stamp) $objStamps[] = new Stamp($stamp);
+        $targets = [
+            "stamp.*",
+            "aspect.aspect"
+        ];
+        $tablesMrg = [
+            "aspect"
+        ];
+        $stamps = $this->crud->read("stamp", $targets, $tablesMrg, $where);
+        foreach ($stamps as $stamp) {
+            $targets = [
+                "category.category"
+            ];
+            $tablesMrg = [
+                "category"
+            ];
+            $where = [
+                "target" => "stamp_id",
+                "value" => $stamp["id"]
+            ];
+            $categories = $this->crud->read("stamp_category", $targets, $tablesMrg, $where);
+            $objStamps[] = new Stamp($stamp, $categories);
+        }
         return $objStamps;
     }
 
@@ -42,7 +46,7 @@ class Manager {
             "target" => "stamp.id",
             "value" => $id
         ];
-        $stamps = $this->crud->readStd($this->stampReq["table"], $this->stampReq["targets"], $this->stampReq["tablesMerge"], $where);
+        $stamps = $this->crud->read($this->stampReq["table"], $this->stampReq["targets"], $this->stampReq["tablesMerge"], $where);
         foreach ($stamps as $stamp) $objStamp = new Stamp($stamp);
         return $objStamp;
     }

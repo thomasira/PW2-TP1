@@ -11,17 +11,17 @@ class ViewContent {
             </header>
             <section>
 
-        <?php for ($i=0; $i < 5; $i++) $objStamps[$i]->injectShort(); ?>
+        <?php foreach ($objStamps as $objStamp) $objStamp->injectShort(); ?>
 
             </section>
         </main>
         <?php
     }
 
-    static public function stampShow($objStamp) {
+    static public function stampShow($objStamps) {
         ?>
         <main>
-           <?php $objStamp->injectLong(); ?>
+        <?php foreach ($objStamps as $objStamp) $objStamp->injectLong(); ?>
         </main>
         <?php
     }

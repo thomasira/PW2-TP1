@@ -9,7 +9,7 @@ class Crud extends PDO {
         $this->dbname = $dbname;
     }
 
-    public function readStd($tableOg, $targets = "*", $tablesMg = null, $where = null, $field = "id", $order = "ASC") {
+    public function read($tableOg, $targets = "*", $tablesMrg = null, $where = null, $field = "id", $order = "ASC") {
         $sqlWhere = "";
         if ($where) {
             $target = $where["target"];
@@ -18,16 +18,18 @@ class Crud extends PDO {
         }
         if ($targets != "*") $targets = implode(", ", $targets);
         $sql = "SELECT $targets FROM $tableOg";
-        if ($tablesMg) {
+        if ($tablesMrg) {
             $sqlMerge = "";
-            foreach ($tablesMg as $tableMg) {
-                $idOg = $tableMg . "_id";
-                $id = $tableMg . ".id";
-                $sqlMerge .= " INNER JOIN $this->dbname.$tableMg ON $id = $idOg";
+            foreach ($tablesMrg as $tableMrg) {
+                $idOg = $tableMrg . "_id";
+                $id = $tableMrg . ".id";
+                $sqlMerge .= " INNER JOIN $this->dbname.$tableMrg ON $id = $idOg";
             }
             $sql .= "$sqlMerge";
         } 
         $sql .= "$sqlWhere;";
+/*         print_r($sql);
+        die(); */
         $query = $this->query($sql);
         return $query->fetchAll();
     }

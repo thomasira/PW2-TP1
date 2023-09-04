@@ -8,7 +8,6 @@ ViewLayout::navigation();
 
 $manager = new Manager();
 $objStamps = $manager->getObjStamps();
-
 ViewContent::home($objStamps);
 ViewLayout::footer(); 
 ?>
