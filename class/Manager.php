@@ -114,6 +114,5 @@ class Manager {
         print_r($data);
         die();
         $id = $data["data"]["id"];
-
     }
 }
