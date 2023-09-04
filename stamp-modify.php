@@ -12,9 +12,8 @@ ViewLayout::schoolHeader("stamp-modify");
 ViewLayout::navigation();
 
 $manager = new Manager();
-$objStamps = $manager->getObjStamps(["target" => "id", "value" => $id]);
+$objStamps = $manager->getObjStamps(["target" => "stamp.id", "value" => $id]);
 $data = $manager->getStampFormData();
-$objStamp = new Stamp($objStamps[0]);
-Stamp::stampModify($data);
+$objStamps[0]->stampModifyForm($data);
 ViewLayout::footer();
 ?>

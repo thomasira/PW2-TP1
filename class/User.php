@@ -69,5 +69,26 @@ class User {
         </main>
         <?php
     }
+
+    public function userModifyForm() {
+        ?>
+        <main>
+            <header>
+                <h2>Modify User</h2>
+            </header>
+           <form action="update.php" method="post">
+                <input type="hidden" name="table" value="user">
+                <input type="hidden" name="data[id]" value="<?= $this->id ?>">
+                <label>Name:
+                    <input type="text" name="data[name]" value="<?= $this->name ?>" required>
+                </label>
+                <label>Email:
+                    <input type="text" name="data[email]" value="<?= $this->email ?>">
+                </label>
+                <input type="submit" value="modify">
+           </form>
+        </main>
+        <?php
+    }
 }
 ?>

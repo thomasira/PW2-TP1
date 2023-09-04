@@ -94,7 +94,26 @@ class Manager {
         return $lastId;
     }
 
-    public function Update($data) {
-        return $this->crud->update($data);
+    public function update($data) {
+        $this->crud->update($data);
+        $id = $data["data"]["id"];
+        if ($data["table"] == "stamp") {
+            $stampId = $data["data"]["id"];
+            $this->crud->delete("stamp_category", ["target" => "stamp_id", "value" => $stampId]);
+            foreach ($data["category_id"] as $categoryId => $on) {
+                $stampCatData = [
+                    "stamp_id" => $stampId,
+                    "category_id" => $categoryId
+                ];
+                $this->crud->create("stamp_category", $stampCatData);
+            }
+        }
+    }
+
+    public function delete($data) {
+        print_r($data);
+        die();
+        $id = $data["data"]["id"];
+
     }
 }

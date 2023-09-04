@@ -19,20 +19,12 @@ class Stamp {
         $this->aspect = $stamp["aspect"];
         $this->categories = $categories;
     }
-
-    public function getName() {
-        return $this->name;
-    }
-
-    public function getId() {
-        return $this->id;
-    }
     
     public function injectShort() { 
         ?>
         <article>
             <hgroup>
-                <h2><a href="stamp-show.php?id=<?= $this->id ?>"><?= $this->name?></a></h2>
+                <h3><a href="stamp-show.php?id=<?= $this->id ?>"><?= $this->name?></a></h3>
                 <div>
                     <p><?= $this->origin ? $this->origin : "Origin Undefined" ?></p>
                     <p><?= $this->year ? $this->year : "Year Undefined" ?></p>
@@ -92,7 +84,7 @@ class Stamp {
                 </label>
                 <?php foreach ($categories as $category) : ?>
                 <label><?= $category["category"] ?>
-                    <input type="checkbox" id="category_<?= $category["id"] ?>" name="category_id[<?= $category["id"] ?>]" value="1">
+                    <input type="checkbox" name="category_id[<?= $category["id"] ?>]" value="1">
                 </label>
                 <?php endforeach ?>
                 </label>
@@ -119,7 +111,10 @@ class Stamp {
         <?php
     }
 
-    public function stampModify($data) {
+    public function stampModifyForm($data) {
+        $categories = $data["categories"];
+        $aspects = $data["aspects"];
+        $users = $data["users"];
         ?>
         <main>
             <header>
@@ -127,36 +122,40 @@ class Stamp {
             </header>
            <form action="update.php" method="post">
                 <label>Name:
-                    <input type="text" name="name" value="<?= $this->name ?>"required>
+                    <input type="text" name="data[name]" value="<?= $this->name ?>"required>
                 </label>
                 <label>Origin:
-                    <input type="text" name="origin" value="<?= $this->origin ?>">
+                    <input type="text" name="data[origin]" value="<?= $this->origin ?>">
                 </label>
                 <label>Year:
-                    <input type="text" name="year" value="<?= $this->year ?>">
+                    <input type="text" name="data[year]" value="<?= $this->year ?>">
                 </label>
-                <?php foreach ($data["categories"] as $category) : ?>
+                <?php foreach ($categories as $category): ?>
                 <label><?= $category["category"] ?>
                     <input type="checkbox" id="category_<?= $category["id"] ?>" name="category_id[<?= $category["id"] ?>]" 
-                    value="<?= ?>">
+                    <?php foreach ($this->categories as $thisCategory) {
+                            if ($thisCategory["category"] == $category["category"]) echo "checked";
+                    }?> value="1">
                 </label>
                 <?php endforeach ?>
                 <label>Aspect:
-                    <select name="aspect_id">
-                        <?php foreach ($data["aspects"] as $aspect) : ?>
-                        <option value="<?= $aspect["id"] ?>"><?= $aspect["name"] ?></option>
+                    <select name="data[aspect_id]">
+                        <?php foreach ($aspects as $aspect): ?>
+                        <option value="<?= $aspect["id"] ?>" <?php if ($this->aspect == $aspect["aspect"]) echo "selected" ?>>
+                            <?= $aspect["aspect"] ?>
+                        </option>
                         <?php endforeach ?>
                     </select>
                 </label>
                 <label>description:
-                    <textarea name="description" cols="30" rows="10"><?= $objStamp->description ?></textarea>
+                    <textarea name="data[description]" cols="30" rows="10"><?= $this->description ?></textarea>
                 </label>
                 <input type="hidden" name="table" value="stamp">
-                <input type="hidden" name="id" value="<?= $objStamp->id ?>">
+                <input type="hidden" name="data[id]" value="<?= $this->id ?>">
                 <input type="submit" value="modify">
            </form>
-           <form action="stamp-delete.php" method="post">
-                <input type="hidden" name="id" value="<?= $objStamp->id ?>">
+           <form action="delete.php" method="post">
+                <input type="hidden" name="id" value="<?= $this->id ?>">
                 <input type="submit" value="delete">
            </form>
         </main>

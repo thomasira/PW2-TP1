@@ -7,6 +7,6 @@ if (!isset($_POST) || $_POST == null) {
 }
 
 $manager = new Manager();
-$id = $manager->update($_POST);
-header("location: stamp-show.php?id=$id")
+$manager->update($_POST);
+header("location: panel.php")
 ?>
