@@ -11,7 +11,7 @@ class Manager {
     }
 
     public function getStampNames() {
-        return $this->crud->readStd($this->stampReq["table"], ["stamp.name", "stamp.id"]);
+        return $this->crud->read($this->stampReq["table"], ["stamp.name", "stamp.id"]);
     }
 
     public function getObjStamps($where = null) {
@@ -41,23 +41,11 @@ class Manager {
         return $objStamps;
     }
 
-    public function getObjStamp($id) {
-        $where = [
-            "target" => "stamp.id",
-            "value" => $id
-        ];
-        $stamps = $this->crud->read($this->stampReq["table"], $this->stampReq["targets"], $this->stampReq["tablesMerge"], $where);
-        foreach ($stamps as $stamp) $objStamp = new Stamp($stamp);
-        return $objStamp;
-    }
-
-    public function getUserNames() {
-        return $this->crud->readStd("user", ["user.name", "user.id"]);
-    }
-
-/*     public function getObjUsers() {
+    public function getObjUsers($where = null) {
         $objUsers = [];
-        $users = $this->crud->readStd("user");
+        $users = $this->crud->read("user");
+        print_r($users);
+        die();
         foreach ($users as $user) {
             $objStamps = [];
             $userId = $user["id"];
@@ -66,7 +54,7 @@ class Manager {
             $objUsers[] = new User($user, $objStamps);
         }
         return $objUsers;
-    } */
+    }
 
     public function getObjUser($id) {
         $stampsTargets = [
