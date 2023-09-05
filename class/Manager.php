@@ -1,7 +1,9 @@
 <?php
-require "./crud/Crud.php";
-require "./class/Stamp.php";
-require "./class/User.php";
+define("MANAGER_ROOT", __DIR__);
+print_r(MANAGER_ROOT);
+require MANAGER_ROOT . "/Crud.php";
+require MANAGER_ROOT . "/Stamp.php";
+require MANAGER_ROOT . "/User.php";
 
 class Manager {
     private $crud;

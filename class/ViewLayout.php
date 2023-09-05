@@ -1,7 +1,7 @@
 <?php
 
 class ViewLayout {
-    
+    private $path = __DIR__;
     static public function schoolHeader($title) { 
         ?>
         <!DOCTYPE html>
@@ -11,7 +11,16 @@ class ViewLayout {
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <meta name="author" content="Thomas Aucoin-Lo">
-                <link rel="stylesheet" href="./style/master.css">
+                <style>
+                    <?php 
+                    include "./style/layout/navigation.css";
+                    include "./style/layout/structure.css";
+                    include "./style/config/general.css";
+                    include "./style/config/school-header.css";
+                    include "./style/config/school-footer.css";
+                     ?>
+            </style>
+                
                 <title>PW2-TP1/<?= $title ?></title>
             </head>
             <body>
