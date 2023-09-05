@@ -133,41 +133,6 @@ class ViewContent {
 
 
 
-    static public function userModify($objUser) {
-        ?>
-        <main>
-            <header>
-                <h2>Modify User</h2>
-            </header>
-           <section>
-               <form action="" method="post">
-                    <label>Name:
-                        <input type="text" name="name" value="<?= $objUser->getName() ?>" required>
-                    </label>
-                    <label>Email:
-                        <input type="text" name="email" value="<?= $objUser->getEmail() ?>" required>
-                    </label>
-                    <input type="submit" value="modify">
-               </form>
-           </section>
-           <section>
-               <ul>
-                <?php foreach ($objUser->stamps as $userStamp) : ?>
-                    <li><?= $userStamp["stamp"]->getName() ?> <small>qty: <?= $userStamp["qty"] ?></small></li>
-                <?php endforeach ?>
-               </ul>
-           </section>
-        </main>
-        <?php
-    }
-
-     
-
-
-
-
-
-
     static public function aspectForm() {
         ?>
         <main>
