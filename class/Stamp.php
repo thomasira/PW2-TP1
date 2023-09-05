@@ -23,13 +23,11 @@ class Stamp {
     public function injectShort() { 
         ?>
         <article>
-            <hgroup>
                 <h3><a href="stamp-show.php?id=<?= $this->id ?>"><?= $this->name?></a></h3>
                 <div>
                     <p><?= $this->origin ? $this->origin : "Origin Undefined" ?></p>
                     <p><?= $this->year ? $this->year : "Year Undefined" ?></p>
                 </div>
-            </hgroup>
         </article>
         <?php
     }

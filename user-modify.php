@@ -8,9 +8,8 @@ require "./class/ViewLayout.php";
 require "./class/ViewContent.php";
 require "./class/Manager.php";
 
-ViewLayout::schoolHeader("home");
+ViewLayout::schoolHeader("user-modify");
 ViewLayout::navigation();
-
 $manager = new Manager();
 $objUsers = $manager->getObjUsers(["target" => "user.id", "value" => $id]);
 $objUsers[0]->userModifyForm();

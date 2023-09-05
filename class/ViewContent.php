@@ -25,10 +25,6 @@ class ViewContent {
         <?php
     }
 
-
-
-
-
     static public function aspectForm() {
         ?>
         <main>

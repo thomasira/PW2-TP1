@@ -8,9 +8,8 @@ require "./class/ViewLayout.php";
 require "./class/ViewContent.php";
 require "./class/Manager.php";
 
-ViewLayout::schoolHeader("home");
+ViewLayout::schoolHeader("stamp-show");
 ViewLayout::navigation();
-
 $manager = new Manager();
 $objStamps = $manager->getObjStamps(["target" => "stamp.id", "value" => $id]);
 $objStamps[0]->stampShow();
