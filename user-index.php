@@ -8,6 +8,6 @@ ViewLayout::navigation();
 $manager = new Manager();
 $users = $manager->getObjUsers();
 
-ViewContent::userIndex($users);
+User::userIndex($users);
 ViewLayout::footer(); 
 ?>

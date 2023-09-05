@@ -116,7 +116,7 @@ class Manager {
             $this->crud->delete("stamp_category", ["target" => "stamp_id", "value" => $stampId]);
         }
         if ($data["table"] == "user") {
-            $userStamps = $this->getStampNames(["target" => "user_id", "value" => $data["data"]["id"]]);
+            $userStamps = $this->getStampNames(["target" => "user_id", "value" => $data["id"]]);
             foreach ($userStamps as $userStamp) {
                 $stampData["table"] = "stamp";
                 $stampData["id"] = $userStamp["id"];

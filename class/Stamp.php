@@ -162,4 +162,27 @@ class Stamp {
         </main>
         <?php
     }
+
+    public function stampShow() {
+        ?>
+        <main>
+        <?= $this->injectLong(); ?>
+        </main>
+        <?php
+    }
+
+    static public function stampIndex($objStamps) {
+        ?>
+        <main>
+            <header>
+                <h2>All Stamps</h2>
+            </header>
+            <section>
+
+        <?php foreach ($objStamps as $objStamp) $objStamp->injectShort(); ?>
+        
+            </section>
+        </main>
+        <?php
+    }
 }

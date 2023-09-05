@@ -12,8 +12,7 @@ ViewLayout::schoolHeader("home");
 ViewLayout::navigation();
 
 $manager = new Manager();
-$objUser = $manager->getObjUsers(["target" => "user.id", "value" => $id]);
-
-ViewContent::userShow($objUser);
+$objUsers = $manager->getObjUsers(["target" => "user.id", "value" => $id]);
+$objUsers[0]->userShow();
 ViewLayout::footer();
 ?>

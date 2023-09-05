@@ -29,7 +29,7 @@ class ViewLayout {
             <a href=".">HOME</a>
             <a href="./stamp-index.php">STAMPS</a>
             <a href="./user-index.php">USERS</a>
-            <a href="./panel.php">PANEL</a>
+            <a href="./panel">PANEL</a>
         </nav>
         <?php
     }

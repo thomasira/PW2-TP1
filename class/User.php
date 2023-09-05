@@ -95,5 +95,34 @@ class User {
         </main>
         <?php
     }
+
+    public function userShow() {
+        ?>
+        <main>
+
+        <?= $this->injectLong() ?>
+
+        </main>
+        <?php
+    }
+
+    static public function userIndex($users) {
+        ?>
+        <main>
+            <header>
+                <h2>Users</h2>
+            </header>
+            <section>
+
+            <?php foreach ($users as $user) : ?>
+                <p>
+                    <h3><a href="user-show.php?id=<?= $user->getId() ?>"><?= $user->getName() ?></a></h3>
+                </p>
+            <?php endforeach ?>
+            </section>
+        </main>
+        <?php
+    }
+    
 }
 ?>

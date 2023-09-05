@@ -11,64 +11,19 @@ class ViewContent {
             </header>
             <section>
 
-        <?php foreach ($objStamps as $objStamp) $objStamp->injectShort(); ?>
-
+        <?php 
+        if (count($objStamps) > 5) {
+            for ($i=0; $i < 5; $i++) { 
+                $objStamps[$i]->injectShort();
+            }
+        } else {
+            foreach ($objStamps as $objStamp) $objStamp->injectShort();
+        }
+         ?>
             </section>
         </main>
         <?php
     }
-
-    static public function stampShow($objStamps) {
-        ?>
-        <main>
-        <?php foreach ($objStamps as $objStamp) $objStamp->injectLong(); ?>
-        </main>
-        <?php
-    }
-
-    static public function stampIndex($objStamps) {
-        ?>
-        <main>
-            <header>
-                <h2>All Stamps</h2>
-            </header>
-            <section>
-
-        <?php foreach ($objStamps as $objStamp) $objStamp->injectShort(); ?>
-        
-            </section>
-        </main>
-        <?php
-    }
-
-    static public function userIndex($users) {
-        ?>
-        <main>
-            <header>
-                <h2>Users</h2>
-            </header>
-            <section>
-
-            <?php foreach ($users as $user) : ?>
-                <p>
-                    <h3><a href="user-show.php?id=<?= $user->getId() ?>"><?= $user->getName() ?></a></h3>
-                </p>
-            <?php endforeach ?>
-            </section>
-        </main>
-        <?php
-    }
-    
-    static public function userShow($objUsers) {
-        ?>
-        <main>
-
-        <?php foreach ($objUsers as $objUser) $objUser->injectLong() ?>
-
-        </main>
-        <?php
-    }
-    
 
     static public function panel($data) {
         $users = $data["users"];

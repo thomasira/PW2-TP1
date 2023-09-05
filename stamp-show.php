@@ -13,6 +13,6 @@ ViewLayout::navigation();
 
 $manager = new Manager();
 $objStamps = $manager->getObjStamps(["target" => "stamp.id", "value" => $id]);
-ViewContent::stampShow($objStamps);
+$objStamps[0]->stampShow();
 ViewLayout::footer();
 ?>
