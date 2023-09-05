@@ -5,6 +5,7 @@ require "./class/Manager.php";
 
 ViewLayout::schoolHeader("home");
 ViewLayout::navigation();
+
 $manager = new Manager();
 $users = $manager->getObjUsers();
 

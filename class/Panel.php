@@ -1,26 +1,13 @@
 <?php
-require_once "../class/Manager.php";
 
 class Panel {
 
     static public function panelIndex($data) {
-        $manager = new Manager();
-        $data = $manager->getAllShort();
-
         $users = $data["users"];
         $stamps = $data["stamps"];
         $aspects = $data["aspects"];
         $categories = $data["categories"];
-
-        $msg = null;
-        if (isset($_GET["msg"]) && $_GET["msg"] != null) {
-            if ($_GET["msg"] == 1) $msg = "<p>user created</p>";
-            if ($_GET["msg"] == 2) $msg = "<p>stamp created</p>";
-            if ($_GET["msg"] == 3) $msg = "<p>aspect created</p>";
-            if ($_GET["msg"] == 4) $msg = "<p>category created</p>";
-        }
         ?>
-        <?= $msg ?>
         <main>
             <header>
                 <h2>Panel</h2>

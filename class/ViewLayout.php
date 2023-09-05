@@ -1,7 +1,6 @@
 <?php
 
 class ViewLayout {
-    private $path = __DIR__;
     static public function schoolHeader($title) { 
         ?>
         <!DOCTYPE html>
@@ -38,7 +37,7 @@ class ViewLayout {
             <a href=".">HOME</a>
             <a href="./stamp-index.php">STAMPS</a>
             <a href="./user-index.php">USERS</a>
-            <a href="./panel">PANEL</a>
+            <a href="./panel.php">PANEL</a>
         </nav>
         <?php
     }
