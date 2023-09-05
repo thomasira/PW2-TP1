@@ -10,8 +10,8 @@ class Manager {
         $this->crud = new Crud("stamp");
     }
 
-    public function getStampNames() {
-        return $this->crud->read("stamp", ["stamp.id", "stamp.name"]);
+    public function getStampNames($where = null) { 
+        return $this->crud->read("stamp", ["stamp.id", "stamp.name"], null, $where);
     }
 
     public function getStampFormData() {
@@ -110,9 +110,19 @@ class Manager {
         }
     }
 
-    public function delete($data) {
-        print_r($data);
-        die();
-        $id = $data["data"]["id"];
+    public function delete($data) { 
+        if ($data["table"] == "stamp") {
+            $stampId = $data["id"];
+            $this->crud->delete("stamp_category", ["target" => "stamp_id", "value" => $stampId]);
+        }
+        if ($data["table"] == "user") {
+            $userStamps = $this->getStampNames(["target" => "user_id", "value" => $data["data"]["id"]]);
+            foreach ($userStamps as $userStamp) {
+                $stampData["table"] = "stamp";
+                $stampData["id"] = $userStamp["id"];
+                $this->delete($stampData);
+            }
+        }
+        $this->crud->delete($data["table"], ["target" => "id", "value" => $data["id"]]);
     }
 }
