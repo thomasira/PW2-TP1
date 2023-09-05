@@ -10,3 +10,6 @@ body>nav{
 body>nav>a:hover{
     color: var(--colorSec);
 }
+body>nav>a:last-of-type{
+    color: rgb(75, 99, 77);
+}

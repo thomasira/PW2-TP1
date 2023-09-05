@@ -7,9 +7,9 @@ class ViewContent {
         <main>
             <header>
                 <h2>Home</h2>
-                <p>recent entries</p>
+                <p>welcome to stamp exchange</p>
             </header>
-            <section>
+            <section class="flow-stamps">
 
         <?php 
         if (count($objStamps) > 5) {

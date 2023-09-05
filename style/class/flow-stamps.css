@@ -1,0 +1,9 @@
+
+.flow-stamps{
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--padMed);
+}
+.flow-stamps>*{
+    flex: 1 0 200px;
+}

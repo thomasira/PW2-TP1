@@ -1,14 +1,24 @@
 <?php
 
+/**
+ * gèrer les requêtes à la DB, étendre la classe PDO
+ */
 class Crud extends PDO {
     public $dbname;
 
-
+    /**
+     * établit les params. de la classe parent et la prop. dbname
+     */
     public function __construct($dbname) {
         parent::__construct("mysql:host=localhost;dbname=$dbname;port=3306;charset=utf8", "root", "");
         $this->dbname = $dbname;
     }
 
+    /**
+     * préparer et executer les requêtes CREATE à la DB 
+     * 
+     * @param $table, $data
+     */
     public function create($table, $data) {
         $fieldName = implode(", ", array_keys($data));
         $fieldSafe = ":" . implode(", :", array_keys($data));
@@ -21,6 +31,9 @@ class Crud extends PDO {
         return $this->lastInsertId();
     }
 
+    /**
+     * préparer et executer les requêtes CREATE à la DB
+     */
     public function read($tableOg, $targets = "*", $tablesMrg = null, $where = null, $field = "id", $order = "ASC") {
         $sqlWhere = "";
         if ($where) {

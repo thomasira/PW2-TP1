@@ -25,28 +25,30 @@ class User {
 
     public function injectLong() {
         ?>
-        <header>
-            <h2><?= $this->name ?></h2>
-            <div>
-                <p><?= $this->email ? $this->email : "Email Undefined" ?></p>
-            </div>
-        </header>
         <section>
-            <h3>My stamps</h3>
-            <ul>
-                <?php foreach($this->stamps as $stamp) : ?>
-                    <li><?php $stamp->injectShort() ?></a></li>
-                <?php endforeach ?>
-            </ul>
-            <form action="stamp-create.php" method="post">
-                <input type="hidden" name="userId" value="<?= $this->id ?>">
-                <input type="submit" value="add stamp">
+            <header>
+                <h2><?= $this->name ?></h2>
+                <div>
+                    <p><?= $this->email ? $this->email : "Email Undefined" ?></p>
+                </div>
+            </header>
+            <div>
+                <h3>My stamps</h3>
+                <ul>
+                    <?php foreach($this->stamps as $stamp) : ?>
+                        <li><?php $stamp->injectShort() ?></a></li>
+                    <?php endforeach ?>
+                </ul>
+                <form action="stamp-create.php" method="post">
+                    <input type="hidden" name="userId" value="<?= $this->id ?>">
+                    <input type="submit" value="add stamp">
+                </form>
+            </div>
+            <form action="user-modify.php" method="post">
+                <input type="hidden" name="id" value="<?= $this->id ?>">
+                <input type="submit" value="modify user">
             </form>
         </section>
-        <form action="user-modify.php" method="post">
-            <input type="hidden" name="id" value="<?= $this->id ?>">
-            <input type="submit" value="modify user">
-        </form>
         <?php
     }
 
@@ -112,7 +114,7 @@ class User {
             <header>
                 <h2>Users</h2>
             </header>
-            <section>
+            <section class="flow-user">
 
             <?php foreach ($users as $user) : ?>
                 <p>

@@ -1,0 +1,27 @@
+
+.card-stamp{
+    max-width: 400px;
+    background-color: var(--colorSec);
+    box-shadow: 2px 2px 5px var(--colorShadow);
+}
+.card-stamp>header{
+    padding: var(--padSml);
+}
+.card-stamp p{
+    font-size: var(--fontSmlr);
+}
+.card-stamp>div{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    padding: 4px 6px;
+    gap: var(--padSml);
+    background-color: var(--colorDark);
+    color: var(--colorLight);
+}
+.card-stamp:hover{
+    box-shadow: 4px 4px 5px var(--colorShadow);
+}
+.card-stamp:active{
+    box-shadow: inset 4px 4px 5px var(--colorShadow);
+}

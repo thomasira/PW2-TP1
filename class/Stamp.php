@@ -3,6 +3,7 @@
 class Stamp {
     private
     $id,
+    $userId,
     $name,
     $description,
     $origin,
@@ -11,7 +12,8 @@ class Stamp {
     $aspect;
 
     public function __construct($stamp, $categories) {
-        $this->id =$stamp["id"];
+        $this->id = $stamp["id"];
+        $this->userId = $stamp["user_id"];
         $this->name = $stamp["name"];
         $this->description = $stamp["description"];
         $this->origin = $stamp["origin"];
@@ -22,41 +24,53 @@ class Stamp {
     
     public function injectShort() { 
         ?>
-        <article>
-                <h3><a href="stamp-show.php?id=<?= $this->id ?>"><?= $this->name?></a></h3>
+        <a href="stamp-show.php?id=<?= $this->id ?>">
+        <article class="card-stamp">
+                <header>
+                    <h3><?= $this->name ?></h3>
+                </header>
                 <div>
                     <p><?= $this->origin ? $this->origin : "Origin Undefined" ?></p>
                     <p><?= $this->year ? $this->year : "Year Undefined" ?></p>
                 </div>
         </article>
+        </a>
         <?php
     }
 
 
     public function injectLong() { 
         ?>
-        <header>
-            <h2><?= $this->name ?></h2>
-            <div>
-                <p><?= $this->origin ? $this->origin : "Origin Undefined" ?></p>
-                <p><?= $this->year ? $this->year : "Year Undefined" ?></p>
-            </div>
-        </header>
-        <aside>
-            <?php foreach ($this->categories as $category) : ?>
-            <p><?= $category["category"] ?></p>
-            <?php endforeach ?>
-        </aside>
-        <section>
-            <p><small>description:</small> <?= $this->description ? $this->description : "Undefined" ?></p>
-            <p><small>aspect:</small> <?= $this->aspect? $this->aspect : "Undefined" ?></p>
-        </section>
-        <section>
-            <form action="stamp-modify.php" method="post">
-                <input type="hidden" name="id" value="<?= $this->id ?>">
-                <input type="submit" value="modify">
-            </form>
-        </section>
+        <article class="file-stamp">
+            <header>
+                <h2><?= $this->name ?></h2>
+                <p>userId: <?= $this->userId ?></p>
+            </header>
+            <section>
+                <div>
+                    <h4>Details</h4>
+                    <p><small>origin:</small> <?= $this->origin ? $this->origin : "Origin Undefined" ?></p>
+                    <p><small>year:</small> <?= $this->year ? $this->year : "Year Undefined" ?></p>
+                    <p><small>aspect:</small> <?= $this->aspect? $this->aspect : "Undefined" ?></p>
+                </div>
+                <aside>
+                    <h4>Categories</h4>
+                    <?php foreach ($this->categories as $category) : ?>
+                    <p><?= $category["category"] ?></p>
+                    <?php endforeach ?>
+                </aside>
+            </section>
+            <section>
+                <h4>Description</h4>
+                <p><?= $this->description ? $this->description : "Undefined" ?></p>
+            </section>
+            <section>
+                <form action="stamp-modify.php" method="post">
+                    <input type="hidden" name="id" value="<?= $this->id ?>">
+                    <input type="submit" value="modify">
+                </form>
+            </section>
+        </article>
         <?php
     }
 
@@ -175,7 +189,7 @@ class Stamp {
             <header>
                 <h2>All Stamps</h2>
             </header>
-            <section>
+            <section class="flow-stamps">
 
         <?php foreach ($objStamps as $objStamp) $objStamp->injectShort(); ?>
         

@@ -17,6 +17,10 @@ class ViewLayout {
                     include "./style/config/general.css";
                     include "./style/config/school-header.css";
                     include "./style/config/school-footer.css";
+                    include "./style/class/card-stamp.css";
+                    include "./style/class/flow-stamps.css";
+                    include "./style/class/file-stamp.css";
+
                      ?>
             </style>
                 
