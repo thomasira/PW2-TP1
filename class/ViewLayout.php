@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * gerer l'affichage général 
+ */
 class ViewLayout {
     static public function schoolHeader($title) { 
         ?>
@@ -20,6 +23,8 @@ class ViewLayout {
                     include "./style/class/card-stamp.css";
                     include "./style/class/flow-stamps.css";
                     include "./style/class/file-stamp.css";
+                    include "./style/class/file-user.css";
+
 
                      ?>
             </style>

@@ -1,12 +1,14 @@
 <?php
 
+/**
+ * gerer l'affichage des utilisateurs
+ */
 class User {
     private 
         $id,
         $name,
-        $email;
-    public $stamps;
-
+        $email,
+        $stamps;
 
     public function __construct($user, $userStamps) {
         $this->id = $user["id"];
@@ -18,14 +20,17 @@ class User {
     public function getName() {
         return $this->name;
     }
+
     public function getId() {
         return $this->id;
     }
 
-
+    /**
+     * injecter une version longue des données
+     */
     public function injectLong() {
         ?>
-        <section>
+        <section class="file-user">
             <header>
                 <h2><?= $this->name ?></h2>
                 <div>
@@ -34,11 +39,11 @@ class User {
             </header>
             <div>
                 <h3>My stamps</h3>
-                <ul>
+                <div class="flow-stamps">
                     <?php foreach($this->stamps as $stamp) : ?>
-                        <li><?php $stamp->injectShort() ?></a></li>
+                        <?php $stamp->injectShort() ?>
                     <?php endforeach ?>
-                </ul>
+                </div>
                 <form action="stamp-create.php" method="post">
                     <input type="hidden" name="userId" value="<?= $this->id ?>">
                     <input type="submit" value="add stamp">
@@ -52,6 +57,10 @@ class User {
         <?php
     }
 
+    /**
+     * injecter un formulaire de création d'utilisateur
+     * @param $data
+     */
     static public function userCreateForm() {
         ?>
         <main>
@@ -72,6 +81,11 @@ class User {
         <?php
     }
 
+    /**
+     * injecter un formulaire de modification d'utilisateur'
+     * 
+     * @param $data
+     */
     public function userModifyForm() {
         ?>
         <main>
@@ -98,6 +112,9 @@ class User {
         <?php
     }
 
+    /**
+     * injecter la page d'un utilisateur
+     */
     public function userShow() {
         ?>
         <main>
@@ -108,6 +125,11 @@ class User {
         <?php
     }
 
+    /**
+     * injecter la page des utilisateurs
+     * 
+     * @param $users
+     */
     static public function userIndex($users) {
         ?>
         <main>
@@ -117,9 +139,7 @@ class User {
             <section class="flow-user">
 
             <?php foreach ($users as $user) : ?>
-                <p>
-                    <h3><a href="user-show.php?id=<?= $user->getId() ?>"><?= $user->getName() ?></a></h3>
-                </p>
+                <a href="user-show.php?id=<?= $user->getId() ?>"><h3><?= $user->getName() ?></h3></a>
             <?php endforeach ?>
             </section>
         </main>

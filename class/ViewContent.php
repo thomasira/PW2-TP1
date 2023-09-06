@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * gerer les pages home et formulaires
+ */
 class ViewContent {
 
+    /**
+     * injecter la page home
+     * 
+     * @param $objStamps
+     */
     static public function home($objStamps) {
         ?>
         <main>
@@ -25,6 +33,10 @@ class ViewContent {
         <?php
     }
 
+    /**
+     * injecter le formulaire de création d'aspet
+     * 
+     */
     static public function aspectForm() {
         ?>
         <main>
@@ -42,6 +54,10 @@ class ViewContent {
         <?php
     }
 
+    /**
+     * injecter le formulaire de création de catégorie
+     * 
+     */
     static public function categoryForm() {
         ?>
         <main>

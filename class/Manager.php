@@ -4,24 +4,33 @@ require "./class/Stamp.php";
 require "./class/User.php";
 require "./class/Panel.php";
 
+/**
+ * gerér les demandes entres les vues et la DB
+ */
 class Manager {
     private $crud;
 
+    /**
+     * établir un crud pour la classe
+     */
     public function __construct() {
         $this->crud = new Crud("stamp");
     }
 
+    /**
+     * retourner les noms et ids des étampes de la DB
+     * 
+     * @param $where 
+     */
     public function getStampNames($where = null) { 
         return $this->crud->read("stamp", ["stamp.id", "stamp.name"], null, $where);
     }
 
-    public function getStampFormData() {
-        $data["users"] = $this->crud->read("user", ["user.name", "user.id"]);
-        $data["categories"] = $this->crud->read("category");
-        $data["aspects"] = $this->crud->read("aspect");
-        return $data;
-    }
-
+    /**
+     * retourner un tableau d'objets Stamp créé à partir des données de la DB
+     * 
+     * @param $where
+     */
     public function getObjStamps($where = null) {
         $objStamps = [];
         $targets = [
@@ -49,6 +58,18 @@ class Manager {
         return $objStamps;
     }
 
+    /**
+     * retourner les noms et ids des utilisateurs de la DB
+     */
+    public function getUserNames() {
+        return $this->crud->read("user", ["user.name", "user.id"]);
+    }
+
+    /**
+     * retourne un tableau d'objets User créé à partir des données de la DB
+     * 
+     * @param $where
+     */
     public function getObjUsers($where = null) {
         $objUsers = [];
         $users = $this->crud->read("user", "*", null, $where);
@@ -61,26 +82,32 @@ class Manager {
         return $objUsers;
     }
 
-
-    public function getCategories() {
-        return $this->crud->read("category");
-    }
-
-    public function getUserNames() {
-        return $this->crud->read("user", ["user.name", "user.id"]);
-    }
-    public function getAspects() {
-        return $this->crud->read("aspect");
-    }
-
-    public function getAllShort() {
-        $data["stamps"] = $this->getStampNames();
+    /**
+     * retourner la donnée requise pour le formulaire Stamp
+     */
+    public function getStampFormData() {
         $data["users"] = $this->getUserNames();
-        $data["categories"] = $this->getCategories();
-        $data["aspects"] = $this->getAspects();
+        $data["categories"] = $this->crud->read("category");
+        $data["aspects"] = $this->crud->read("aspect");
         return $data;
     }
 
+    /**
+     * retourner les info noms et id de toute les tables(sauf clé composé)
+     */
+    public function getAllShort() {
+        $data["stamps"] = $this->getStampNames();
+        $data["users"] = $this->getUserNames();
+        $data["categories"] = $this->crud->read("category");
+        $data["aspects"] = $this->crud->read("aspect");
+        return $data;
+    }
+
+    /**
+     * évaluer la requête et créér les entrées requise dans la DB, retourner le ID
+     * 
+     * @param $data
+     */
     public function create($data) {
         $lastId = $this->crud->create($data["table"], $data["data"]);
         if ($data["table"] == "stamp" && isset($data["category_id"])) {
@@ -95,6 +122,11 @@ class Manager {
         return $lastId;
     }
 
+    /**
+     *  évaluer la requête et mettre à jour les entrées requise dans la DB
+     * 
+     * @param $data
+     */
     public function update($data) {
         $this->crud->update($data);
         $id = $data["data"]["id"];
@@ -111,6 +143,9 @@ class Manager {
         }
     }
 
+    /**
+     * évaluer la requête et supprimer les entrées requise dans la DB
+     */
     public function delete($data) { 
         if ($data["table"] == "stamp") {
             $stampId = $data["id"];

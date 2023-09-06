@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * gerer l'affichage du Panel
+ */
 class Panel {
 
+    /**
+     * afficher le panel
+     * 
+     * @param $data
+     */
     static public function panelIndex($data) {
         $users = $data["users"];
         $stamps = $data["stamps"];

@@ -5,5 +5,5 @@
     gap: var(--padMed);
 }
 .flow-stamps>*{
-    flex: 1 0 200px;
+    flex: 1 0 300px;
 }

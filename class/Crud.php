@@ -7,7 +7,7 @@ class Crud extends PDO {
     public $dbname;
 
     /**
-     * établit les params. de la classe parent et la prop. dbname
+     * établir les params. de la classe parent et la prop. dbname
      */
     public function __construct($dbname) {
         parent::__construct("mysql:host=localhost;dbname=$dbname;port=3306;charset=utf8", "root", "");
@@ -32,7 +32,9 @@ class Crud extends PDO {
     }
 
     /**
-     * préparer et executer les requêtes CREATE à la DB
+     * préparer et executer les requêtes READ à la DB
+     * 
+     * @param $tableOg, $targets, $tablesMrg, $where, $field, $order
      */
     public function read($tableOg, $targets = "*", $tablesMrg = null, $where = null, $field = "id", $order = "ASC") {
         $sqlWhere = "";
@@ -57,6 +59,11 @@ class Crud extends PDO {
         return $query->fetchAll();
     }
 
+    /**
+     * préparer et executer les requêtes UPDATE à la DB
+     * 
+     * @param $data
+     */
     public function update($data) {
         print_r($data);
         $table = $data["table"];
@@ -73,6 +80,11 @@ class Crud extends PDO {
         $query->execute();
     }
 
+    /**
+     * préparer et executer les requêtes DELETE à la DB
+     * 
+     * @param $table, $where
+     */
     public function delete($table, $where) {
         $target = $where["target"];
         $value = $where["value"];

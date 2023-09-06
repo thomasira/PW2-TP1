@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * gerer l'affichage des timbres
+ */
 class Stamp {
     private
     $id,
@@ -22,6 +25,9 @@ class Stamp {
         $this->categories = $categories;
     }
     
+    /**
+     * injecter une version courte des données
+     */
     public function injectShort() { 
         ?>
         <a href="stamp-show.php?id=<?= $this->id ?>">
@@ -38,7 +44,10 @@ class Stamp {
         <?php
     }
 
-
+    
+    /**
+     * injecter une version longue des données
+     */
     public function injectLong() { 
         ?>
         <article class="file-stamp">
@@ -73,7 +82,12 @@ class Stamp {
         </article>
         <?php
     }
-
+    
+    /**
+     * injecter un formulaire de création de timbre
+     * 
+     * @param $data
+     */
     static public function stampCreateForm($data) {
         $categories = $data["categories"];
         $aspects = $data["aspects"];
@@ -123,6 +137,11 @@ class Stamp {
         <?php
     }
 
+    /**
+     * injecter un formulaire de modification de timbre
+     * 
+     * @param $data
+     */
     public function stampModifyForm($data) {
         $categories = $data["categories"];
         $aspects = $data["aspects"];
@@ -175,6 +194,9 @@ class Stamp {
         <?php
     }
 
+    /**
+     * injecter la page d'un timbre
+     */
     public function stampShow() {
         ?>
         <main>
@@ -183,6 +205,11 @@ class Stamp {
         <?php
     }
 
+    /**
+     * injecter la page de timbres
+     * 
+     * @param $objStamps
+     */
     static public function stampIndex($objStamps) {
         ?>
         <main>

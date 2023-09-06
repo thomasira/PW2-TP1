@@ -1,0 +1,29 @@
+
+.file-user{
+    margin: auto;
+    max-width: 1000px;
+    padding: var(--padHuge);
+    border: 1px solid black;
+}
+
+.file-user>*+*{
+    margin-top: var(--padMed);
+}
+.file-user>header{
+    margin: auto;
+    max-width: max-content;
+}
+.file-user>div>*+*{
+    margin-top: var(--padSml);
+}
+.file-stamp>section:first-of-type{
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--padMed);
+}
+.file-stamp>section>*{
+    flex: 1;
+}
+.file-stamp>section h4+*{
+    margin-top: var(--padSmlst);
+}

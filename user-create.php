@@ -1,5 +1,4 @@
 <?php
-
 require "./class/ViewLayout.php";
 require "./class/ViewContent.php";
 require "./class/Manager.php";
