@@ -44,7 +44,7 @@ class ViewContent {
                 <h2>Add Aspect</h2>
             </header>
            <form action="create.php" method="post">
-                <input type="hidden" name="table" value="aspect">
+                <input type="hidden" name="table" value="pw2tp1_aspect">
                 <label>Name:
                     <input type="text" name="data[aspect]" required>
                 </label>
@@ -65,7 +65,7 @@ class ViewContent {
                 <h2>Add Category</h2>
             </header>
            <form action="create.php" method="post">
-            <input type="hidden" name="table" value="category">
+            <input type="hidden" name="table" value="pw2tp1_category">
                 <label>Name:
                     <input type="text" name="data[category]" required>
                 </label>

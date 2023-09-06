@@ -11,7 +11,7 @@ require "./class/Manager.php";
 ViewLayout::schoolHeader("user-modify");
 ViewLayout::navigation();
 $manager = new Manager();
-$objUsers = $manager->getObjUsers(["target" => "user.id", "value" => $id]);
+$objUsers = $manager->getObjUsers(["target" => "pw2tp1_user.id", "value" => $id]);
 $objUsers[0]->userModifyForm();
 ViewLayout::footer();
 ?>

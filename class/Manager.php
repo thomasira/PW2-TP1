@@ -14,7 +14,7 @@ class Manager {
      * établir un crud pour la classe
      */
     public function __construct() {
-        $this->crud = new Crud("stamp");
+        $this->crud = new Crud("e2395387");
     }
 
     /**
@@ -23,7 +23,7 @@ class Manager {
      * @param $where 
      */
     public function getStampNames($where = null) { 
-        return $this->crud->read("stamp", ["stamp.id", "stamp.name"], null, $where);
+        return $this->crud->read("pw2tp1_stamp", ["pw2tp1_stamp.id", "pw2tp1_stamp.name"], null, $where);
     }
 
     /**
@@ -34,25 +34,25 @@ class Manager {
     public function getObjStamps($where = null) {
         $objStamps = [];
         $targets = [
-            "stamp.*",
-            "aspect.aspect"
+            "pw2tp1_stamp.*",
+            "pw2tp1_aspect.aspect"
         ];
         $tablesMrg = [
-            "aspect"
+            "pw2tp1_aspect"
         ];
-        $stamps = $this->crud->read("stamp", $targets, $tablesMrg, $where);
+        $stamps = $this->crud->read("pw2tp1_stamp", $targets, $tablesMrg, $where);
         foreach ($stamps as $stamp) {
             $targets = [
-                "category.category"
+                "pw2tp1_category.category"
             ];
             $tablesMrg = [
-                "category"
+                "pw2tp1_category"
             ];
             $where = [
                 "target" => "stamp_id",
                 "value" => $stamp["id"]
             ];
-            $categories = $this->crud->read("stamp_category", $targets, $tablesMrg, $where);
+            $categories = $this->crud->read("pw2tp1_stamp_category", $targets, $tablesMrg, $where);
             $objStamps[] = new Stamp($stamp, $categories);
         }
         return $objStamps;
@@ -62,7 +62,7 @@ class Manager {
      * retourner les noms et ids des utilisateurs de la DB
      */
     public function getUserNames() {
-        return $this->crud->read("user", ["user.name", "user.id"]);
+        return $this->crud->read("pw2tp1_user", ["pw2tp1_user.name", "pw2tp1_user.id"]);
     }
 
     /**
@@ -72,7 +72,7 @@ class Manager {
      */
     public function getObjUsers($where = null) {
         $objUsers = [];
-        $users = $this->crud->read("user", "*", null, $where);
+        $users = $this->crud->read("pw2tp1_user", "*", null, $where);
         foreach ($users as $user) {
             $objStamps = [];
             $userId = $user["id"];
@@ -87,8 +87,8 @@ class Manager {
      */
     public function getStampFormData() {
         $data["users"] = $this->getUserNames();
-        $data["categories"] = $this->crud->read("category");
-        $data["aspects"] = $this->crud->read("aspect");
+        $data["categories"] = $this->crud->read("pw2tp1_category");
+        $data["aspects"] = $this->crud->read("pw2tp1_aspect");
         return $data;
     }
 
@@ -98,8 +98,8 @@ class Manager {
     public function getAllShort() {
         $data["stamps"] = $this->getStampNames();
         $data["users"] = $this->getUserNames();
-        $data["categories"] = $this->crud->read("category");
-        $data["aspects"] = $this->crud->read("aspect");
+        $data["categories"] = $this->crud->read("pw2tp1_category");
+        $data["aspects"] = $this->crud->read("pw2tp1_aspect");
         return $data;
     }
 
@@ -110,13 +110,13 @@ class Manager {
      */
     public function create($data) {
         $lastId = $this->crud->create($data["table"], $data["data"]);
-        if ($data["table"] == "stamp" && isset($data["category_id"])) {
+        if ($data["table"] == "pw2tp1_stamp" && isset($data["category_id"])) {
             foreach ($data["category_id"] as $categoryId => $on) {
                 $stampCatData = [
                     "stamp_id" => $lastId,
                     "category_id" => $categoryId
                 ];
-                $this->crud->create("stamp_category", $stampCatData);
+                $this->crud->create("pw2tp1_stamp_category", $stampCatData);
             }
         }
         return $lastId;
@@ -130,15 +130,15 @@ class Manager {
     public function update($data) {
         $this->crud->update($data);
         $id = $data["data"]["id"];
-        if ($data["table"] == "stamp") {
+        if ($data["table"] == "pw2tp1_stamp") {
             $stampId = $data["data"]["id"];
-            $this->crud->delete("stamp_category", ["target" => "stamp_id", "value" => $stampId]);
+            $this->crud->delete("pw2tp1_stamp_category", ["target" => "stamp_id", "value" => $stampId]);
             foreach ($data["category_id"] as $categoryId => $on) {
                 $stampCatData = [
                     "stamp_id" => $stampId,
                     "category_id" => $categoryId
                 ];
-                $this->crud->create("stamp_category", $stampCatData);
+                $this->crud->create("pw2tp1_stamp_category", $stampCatData);
             }
         }
     }
@@ -147,14 +147,14 @@ class Manager {
      * évaluer la requête et supprimer les entrées requise dans la DB
      */
     public function delete($data) { 
-        if ($data["table"] == "stamp") {
+        if ($data["table"] == "pw2tp1_stamp") {
             $stampId = $data["id"];
-            $this->crud->delete("stamp_category", ["target" => "stamp_id", "value" => $stampId]);
+            $this->crud->delete("pw2tp1_stamp_category", ["target" => "stamp_id", "value" => $stampId]);
         }
-        if ($data["table"] == "user") {
+        if ($data["table"] == "pw2tp1_user") {
             $userStamps = $this->getStampNames(["target" => "user_id", "value" => $data["id"]]);
             foreach ($userStamps as $userStamp) {
-                $stampData["table"] = "stamp";
+                $stampData["table"] = "pw2tp1_stamp";
                 $stampData["id"] = $userStamp["id"];
                 $this->delete($stampData);
             }

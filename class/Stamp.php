@@ -98,7 +98,7 @@ class Stamp {
                 <h2>Add Stamp</h2>
             </header>
            <form action="create.php" method="post">
-                <input type="hidden" name="table" value="stamp">
+                <input type="hidden" name="table" value="pw2tp1_stamp">
                 <label>Name:
                     <input type="text" name="data[name]" required>
                 </label>
@@ -124,6 +124,8 @@ class Stamp {
                 <label>description:
                     <textarea name="data[description]" cols="30" rows="10"></textarea>
                 </label>
+
+                <?php if (!isset($data["isUser"])) : ?>
                 <label>User
                     <select name="data[user_id]">
                     <?php foreach ($users as $user) : ?>
@@ -131,6 +133,9 @@ class Stamp {
                     <?php endforeach ?>
                     </select>
                 </label>
+                <?php else : ?>
+                <input type="hidden" value="<?= $data["isUser"] ?>" name="data[userId]">
+                <?php endif ?>
                 <input type="submit" value="create" class="button">
            </form>
         </main>
@@ -181,13 +186,13 @@ class Stamp {
                 <label>description:
                     <textarea name="data[description]" cols="30" rows="10"><?= $this->description ?></textarea>
                 </label>
-                <input type="hidden" name="table" value="stamp">
+                <input type="hidden" name="table" value="pw2tp1_stamp">
                 <input type="hidden" name="data[id]" value="<?= $this->id ?>">
                 <input type="submit" value="modify" class="button">
            </form>
            <form action="delete.php" method="post">
                 <input type="hidden" name="id" value="<?= $this->id ?>">
-                <input type="hidden" name="table" value="stamp">
+                <input type="hidden" name="table" value="pw2tp1_stamp">
                 <input type="submit" value="delete" class="button">
            </form>
         </main>

@@ -11,7 +11,7 @@ require "./class/Manager.php";
 ViewLayout::schoolHeader("stamp-modify");
 ViewLayout::navigation();
 $manager = new Manager();
-$objStamps = $manager->getObjStamps(["target" => "stamp.id", "value" => $id]);
+$objStamps = $manager->getObjStamps(["target" => "pw2tp1_stamp.id", "value" => $id]);
 $data = $manager->getStampFormData();
 $objStamps[0]->stampModifyForm($data);
 ViewLayout::footer();

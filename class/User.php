@@ -68,7 +68,7 @@ class User {
                 <h2>Create User</h2>
             </header>
            <form action="create.php" method="post">
-                <input type="hidden" name="table" value="user">
+                <input type="hidden" name="table" value="pw2tp1_user">
                 <label>Name:
                     <input type="text" name="data[name]" required>
                 </label>
@@ -93,7 +93,7 @@ class User {
                 <h2>Modify User</h2>
             </header>
            <form action="update.php" method="post">
-                <input type="hidden" name="table" value="user">
+                <input type="hidden" name="table" value="pw2tp1_user">
                 <input type="hidden" name="data[id]" value="<?= $this->id ?>">
                 <label>Name:
                     <input type="text" name="data[name]" value="<?= $this->name ?>" required>
@@ -105,7 +105,7 @@ class User {
            </form>
            <form action="delete.php" method="post">
                 <input type="hidden" name="id" value="<?= $this->id ?>">
-                <input type="hidden" name="table" value="user">
+                <input type="hidden" name="table" value="pw2tp1_user">
                 <input type="submit" value="delete" class="button">
            </form>
         </main>

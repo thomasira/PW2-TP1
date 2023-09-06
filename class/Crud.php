@@ -4,13 +4,13 @@
  * gèrer les requêtes à la DB, étendre la classe PDO
  */
 class Crud extends PDO {
-    public $dbname;
+    private $dbname;
 
     /**
      * établir les params. de la classe parent et la prop. dbname
      */
     public function __construct($dbname) {
-        parent::__construct("mysql:host=localhost;dbname=$dbname;port=3306;charset=utf8", "root", "");
+        parent::__construct("mysql:host=localhost;dbname=$dbname;port=3306;charset=utf8", "e2395387", "EXQirVZxt1N1Jp45h92p");
         $this->dbname = $dbname;
     }
 
@@ -48,7 +48,8 @@ class Crud extends PDO {
         if ($tablesMrg) {
             $sqlMerge = "";
             foreach ($tablesMrg as $tableMrg) {
-                $idOg = $tableMrg . "_id";
+                $target = ltrim($tableMrg, "pw2tp1_");
+                $idOg = $target . "_id";
                 $id = $tableMrg . ".id";
                 $sqlMerge .= " INNER JOIN $this->dbname.$tableMrg ON $id = $idOg";
             }
