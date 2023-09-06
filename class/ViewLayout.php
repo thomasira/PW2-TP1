@@ -24,11 +24,11 @@ class ViewLayout {
                     include "./style/class/flow-stamps.css";
                     include "./style/class/file-stamp.css";
                     include "./style/class/file-user.css";
-
+                    include "./style/class/panel.css";
+                    include "./style/class/button.css";
 
                      ?>
-            </style>
-                
+                </style>
                 <title>PW2-TP1/<?= $title ?></title>
             </head>
             <body>

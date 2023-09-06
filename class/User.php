@@ -51,7 +51,7 @@ class User {
             </div>
             <form action="user-modify.php" method="post">
                 <input type="hidden" name="id" value="<?= $this->id ?>">
-                <input type="submit" value="modify user">
+                <input type="submit" value="modify user" class="button">
             </form>
         </section>
         <?php
@@ -75,7 +75,7 @@ class User {
                 <label>Email:
                     <input type="text" name="data[email]">
                 </label>
-                <input type="submit" value="create">
+                <input type="submit" value="create" class="button">
            </form>
         </main>
         <?php
@@ -101,12 +101,12 @@ class User {
                 <label>Email:
                     <input type="text" name="data[email]" value="<?= $this->email ?>">
                 </label>
-                <input type="submit" value="modify">
+                <input type="submit" value="modify" class="button">
            </form>
            <form action="delete.php" method="post">
                 <input type="hidden" name="id" value="<?= $this->id ?>">
                 <input type="hidden" name="table" value="user">
-                <input type="submit" value="delete">
+                <input type="submit" value="delete" class="button">
            </form>
         </main>
         <?php

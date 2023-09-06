@@ -1,0 +1,18 @@
+
+.panel{
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--padMed);
+}
+.panel section>h3+*{
+    margin-top: var(--padMed);
+}
+.panel ul>*+*{
+    margin-top: var(--padSmlst);
+}
+.panel li{
+    list-style: none;
+}
+.panel ul a{
+    text-decoration: underline;
+}

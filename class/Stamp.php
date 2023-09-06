@@ -76,7 +76,7 @@ class Stamp {
             <section>
                 <form action="stamp-modify.php" method="post">
                     <input type="hidden" name="id" value="<?= $this->id ?>">
-                    <input type="submit" value="modify">
+                    <input type="submit" value="modify" class="button">
                 </form>
             </section>
         </article>
@@ -131,7 +131,7 @@ class Stamp {
                     <?php endforeach ?>
                     </select>
                 </label>
-                <input type="submit" value="create">
+                <input type="submit" value="create" class="button">
            </form>
         </main>
         <?php
@@ -183,12 +183,12 @@ class Stamp {
                 </label>
                 <input type="hidden" name="table" value="stamp">
                 <input type="hidden" name="data[id]" value="<?= $this->id ?>">
-                <input type="submit" value="modify">
+                <input type="submit" value="modify" class="button">
            </form>
            <form action="delete.php" method="post">
                 <input type="hidden" name="id" value="<?= $this->id ?>">
                 <input type="hidden" name="table" value="stamp">
-                <input type="submit" value="delete">
+                <input type="submit" value="delete" class="button">
            </form>
         </main>
         <?php

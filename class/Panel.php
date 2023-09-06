@@ -20,7 +20,7 @@ class Panel {
             <header>
                 <h2>Panel</h2>
             </header>
-            <div>
+            <div class="panel">
                 <section>
                     <h3>All users</h3>
                     <ul>

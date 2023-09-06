@@ -1,0 +1,7 @@
+
+.button{
+    border-radius: 5px;
+    background-color: var(--colorMain);
+    color: var(--colorLight);
+    padding: var(--padSmlst);
+}
