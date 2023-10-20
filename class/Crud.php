@@ -10,7 +10,7 @@ class Crud extends PDO {
      * établir les params. de la classe parent et la prop. dbname
      */
     public function __construct($dbname) {
-        parent::__construct("mysql:host=localhost;dbname=$dbname;port=3306;charset=utf8", "e2395387", "EXQirVZxt1N1Jp45h92p");
+        parent::__construct("mysql:host=localhost;dbname=$dbname;port=3306;charset=utf8", "********", "************");
         $this->dbname = $dbname;
     }
 
